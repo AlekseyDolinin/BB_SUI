@@ -29,8 +29,8 @@ final class AppLanguage {
         let link = Endpoint.path(.getLanguageDictionary)
         let json = await API.shared._request(link)
         if let json = json {
-            gDict = json
-            dict = json
+//            gDict = json
+//            dict = json
         }
     }
         

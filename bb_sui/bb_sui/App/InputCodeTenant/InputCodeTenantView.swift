@@ -2,91 +2,95 @@ import SwiftUI
 
 struct InputCodeTenantView: View {
     
-    @State private var vm = InputCodeTenantVM()
+    @State private var viewModel = ViewModel()
     
     var body: some View {
+        
         ZStack {
+            
             Color.black
                 .ignoresSafeArea()
-            VStack {
-           
-                Image("logo_frame")
-                    .renderingMode(.template)
-                    .foregroundStyle(.yellow)
-                    .padding(.top, 32)
+            
+            ScrollView {
                 
-                Text("Введите код компании")
-                    .font(.ptRoot_Regular(size: 24))
-                    .foregroundStyle(.white)
+                VStack {
+                    
+                    Image("logo_frame")
+                        .renderingMode(.template)
+                        .foregroundStyle(.yellow)
+                    
+                    let titleTexts = LocalStrings.shared.titleTexts
+                    Text(titleTexts[viewModel.indexSegment])
+                        .font(.ptRoot_Regular(size: 24))
+                        .foregroundStyle(.white)
+                        .padding(.top, 32)
+                    
+                    let placeholderInput = LocalStrings.shared.placeholderInput
+                    TextField(placeholderInput[viewModel.indexSegment], text: $viewModel.code)
+                        .multilineTextAlignment(.center)
+                        .frame(height: 64)
+                        .foregroundStyle(.white)
+                        .background(.secondary)
+                        .tint(.white)
+                        .font(.ptRoot_Regular(size: 24))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .autocorrectionDisabled()
+                        .padding(.horizontal, 16)
+                    
+                    Button(action: {
+                        let needEnterCode = LocalStrings.shared.needEnterCode
+                        if viewModel.code == "" {
+                            viewModel.error = true
+                            viewModel.textError = needEnterCode[viewModel.indexSegment]
+                        } else {
+                            viewModel.sendCode()
+                        }
+                    }) {
+                        let titleSendButton = LocalStrings.shared.titleSendButton
+                        Text(titleSendButton[viewModel.indexSegment])
+                            .font(.ptRoot_Regular(size: 16))
+                    }
                     .padding(.top, 32)
-                
-                TextField("Код", text: $vm.codeTenant)
-                    .multilineTextAlignment(.center)
-                    .frame(height: 64)
-                    .foregroundStyle(.white)
-                    .background(.secondary)
-                    .tint(.white)
-                    .font(.ptRoot_Regular(size: 24))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .padding(.horizontal, 16)
-                                
-                Button(action: {
-                    vm.sendCode()
-                }) {
-                    Text("Отправить")
+                    .buttonStyle(ButtonFirst())
+                    .opacity(viewModel.code.isEmpty ? 0.25 : 1.0)
+                    
+                    Spacer(minLength: 100)
+                    
+                    let comments = LocalStrings.shared.comments
+                    Text(comments[viewModel.indexSegment])
                         .font(.ptRoot_Regular(size: 16))
+                        .foregroundStyle(.gray)
+                        .padding(.horizontal, 24)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    Spacer(minLength: 24)
+                    
+                    Picker("", selection: $viewModel.indexSegment) {
+                        Text("Ру").tag(0)
+                        Text("En").tag(1)
+                        Text("Kz").tag(2)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 140)
+                    .tint(.white)
+                    .colorInvert()
+                    .colorMultiply(.yellow)
+                    .background(.secondary)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
-                .padding(.top, 32)
-                .buttonStyle(ButtonFirst())
-                
-//                .opacity(0.5)
-//                .disabled(true)
-                .opacity($vm.codeTenant.wrappedValue == "" ? 0.25 : 1.0)
-//                .disabled($vm.codeTenant.isEmpty ? false : true)
-                
-                Text("Для работы приложения требуется подключение к сети интернет")
-                    .font(.ptRoot_Regular(size: 16))
-                    .foregroundStyle(.gray)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 32)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
-
-                Picker(selection: $vm.indexSegment, label: Text("test")) {
-                    Text("Ру").tag(0)
-                    Text("En").tag(1)
-                    Text("Kz").tag(2)
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 140)
-                .tint(.white)
-                .colorInvert()
-                .colorMultiply(.yellow)
-                .background(.secondary)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.bottom, 32)
             }
+            .scrollDismissesKeyboard(.interactively)
+            .padding(.top, 16)
+            .background(.black)
+            .navigationBarBackButtonHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
+        .alert(viewModel.textError, isPresented: $viewModel.error) {
+            Button("OK", role: .cancel) { }
+        }
     }
 }
 
 #Preview {
     InputCodeTenantView()
-}
-
-
-
-struct ButtonFirst: ButtonStyle {
-    
-    func makeBody(configuration: Self.Configuration) -> some View { configuration.label
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .frame(height: 48)
-            .foregroundColor(.black)
-            .background(.yellow)
-            .cornerRadius(8)
-            .padding(.horizontal, 16)
-            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
-    }
 }

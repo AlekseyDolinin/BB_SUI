@@ -4,10 +4,12 @@ import SwiftyJSON
 import UIKit
 import Combine
 
+typealias Response_ = (json: JSON, code: Int)
+
 final class API: NSObject {
     
     public static let shared = API()
-    
+        
 //    static var imageCash = NSCache<NSString, UIImage>()
         
 //    ///
@@ -56,8 +58,7 @@ final class API: NSObject {
     public func _request(_ link: String,
                          method: HTTPMethod = .get,
                          parameters: Any? = nil,
-                         needCookie: Bool = true,
-                         checkError: Bool = true) async -> JSON? {
+                         needCookie: Bool = true) async -> Response_? {
         guard let url = URL(string: link) else { return nil }
         var request = URLRequest(url: url)
         if needCookie { setCookieInRequest(&request) }
@@ -78,14 +79,10 @@ final class API: NSObject {
             let (data, response) = try await session.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else { return nil }
             getCookies(response: httpResponse)
-            let json = JSON(data)
-            if checkError == true {
-                parseError(httpResponse: httpResponse, json: json)
-            }
-            return json
+            return Response_(json: JSON(data), code: httpResponse.statusCode)
         } catch {
-            ErrorAlert.shared.show(detail: error.localizedDescription)
-            print("Неожиданная_ошибка_: \(error.localizedDescription.debugDescription).")
+//            ErrorAlert.shared.show(detail: error.localizedDescription)
+//            print("Неожиданная_ошибка_: \(error.localizedDescription.debugDescription).")
             return nil
         }
     }
@@ -121,27 +118,26 @@ final class API: NSObject {
         }
     }
     
-    ///
-    private func parseError(httpResponse: HTTPURLResponse, json: JSON) {
-        /// 400 - нет доступа к объекту (возможно заблокирован в админнке)
-        if httpResponse.statusCode == 400 {
-            print(httpResponse)
-            ErrorAlert.shared.show(detail: json["detail"].stringValue, needBack: true)
-            return
-        }
-        
-        if httpResponse.statusCode >= 400 && httpResponse.statusCode != 401 {
-            print("httpResponse: \(httpResponse)")
-            let detail = (json["detail"].string == nil) ? "\(httpResponse.statusCode)" : json["detail"].stringValue
-            // игнорировать если не авторизован
-            if httpResponse.statusCode == 401 {
-                print("!!!! 401 !!!!!")
-            } else {
-                print(httpResponse)
-                ErrorAlert.shared.show(detail: detail)
-            }
-        }
-    }
+//    ///
+//    private func parseError(httpResponse: HTTPURLResponse, json: JSON) {
+//        /// 400 - нет доступа к объекту (возможно заблокирован в админнке)
+//        if httpResponse.statusCode == 400 {
+//            print(httpResponse)
+//            ErrorAlert.shared.show(detail: json["detail"].stringValue, needBack: true)
+//            return
+//        }
+//        
+//        if httpResponse.statusCode >= 400 && httpResponse.statusCode != 401 {
+//            print("httpResponse: \(httpResponse)")
+//            let detail = (json["detail"].string == nil) ? "\(httpResponse.statusCode)" : json["detail"].stringValue
+//            // игнорировать если не авторизован
+//            if httpResponse.statusCode == 401 {
+//                print("!!!! 401 !!!!!")
+//            } else {
+//                ErrorAlert.shared.show(detail: detail)
+//            }
+//        }
+//    }
     
     ///
     public func setCookieInRequest(_ request_: inout URLRequest) {
