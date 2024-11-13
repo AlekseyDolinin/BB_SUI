@@ -1,44 +1,82 @@
 import SwiftUI
 import WebKit
 
-struct AuthView: UIViewRepresentable {
-    
-    let url: URL
+typealias WebCallBack = ((Bool?) -> Void)?
 
-    func makeUIView(context: Context) -> WKWebView {
-        print("makeUIView")
-        return WKWebView()
+class MyWKDelegate: NSObject, WKNavigationDelegate {
+    
+    private var webCallBack: WebCallBack = nil
+    
+    init(webCallBack: WebCallBack) {
+        self.webCallBack = webCallBack
     }
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        print("updateUIView")
-        let request = URLRequest(url: url)
-        webView.load(request)
-        
-        _ = webView.observe(\.url, options: .new) { webView, change in
-//            if url.absoluteString == LocalStorage.shared.url {
-//                self.hideLoader()
-//            }
-            guard let newValueUrl = change.newValue else { return }
-            
-            print("!!!! \(newValueUrl?.lastPathComponent)")
-            
-//            if newValueUrl?.lastPathComponent == "home" {
-//                self.showLoader()
-//                self.basicWebView.alpha = 0
-//                self.saveCookie()
-//                // запись hostname после авторизации
-//                UserDefaults.standard.set(LocalStorage.shared.hostname, forKey: .hostname)
-//            }
-        }
-    }
-    
-    
-    
-    
+//    func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+//        webCallBack?(navigationAction.request.url?.absoluteString)
+//        decisionHandler(.allow)
+//    }
+//
+//    func webView(_: WKWebView, didFinish _: WKNavigation!) {
+//        print("End loading")
+//    }
 }
 
-#Preview {
-    AuthView(url: URL(string: "https://tinkoff.boxbattle.ru/")!)
-        .edgesIgnoringSafeArea(.all)
+//class MyScriptDelegate: NSObject, WKScriptMessageHandler {
+//    
+//    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
+//        print("WKScriptMessageHandler", message.body)
+//    }
+//}
+
+struct WebView: UIViewRepresentable {
+    
+    private let webView: WKWebView
+    private let delegate: MyWKDelegate
+    private var webViewURLObserver: NSKeyValueObservation?
+    
+    internal init(urlStr: String, webCallBack: WebCallBack) {
+        let config = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: config)
+        delegate = MyWKDelegate(webCallBack: webCallBack)
+        webView.navigationDelegate = delegate
+        webView.cleanAllCookiesInWebviewAuth()
+        
+        if let url = URL(string: urlStr) {
+            webView.load(URLRequest(url: url))
+            webViewURLObserver = webView.observe(\.url, options: .new) { [self] webView, change in
+                guard let newValueUrl = change.newValue else { return }
+                if newValueUrl?.lastPathComponent == "home" {
+                    self.saveCookie()
+                    // запись hostname после авторизации
+                    UserDefaults.standard.set(LocalStorage.shared.hostname, forKey: .hostname)
+                    webCallBack?(true)
+                }
+            }
+        }
+    }
+
+//    private func getConfiguredWebview() -> WKWebView {
+//        return webView
+//    }
+
+    func makeUIView(context _: Context) -> WKWebView {
+        return webView
+    }
+
+    func updateUIView(_: WKWebView, context _: Context) {}
+    
+    private func saveCookie() {
+        webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+            for cookie in cookies {
+                if cookie.name == "user_id" && cookie.domain == LocalStorage.shared.hostname {
+                    var cookieDict = [String : AnyObject]()
+                    cookieDict["cookie_dict"] = cookie.properties as AnyObject?
+                    // save cookies
+                    UserDefaults.standard.set(cookieDict, forKey: .cookiesKey)
+//                    print("saveCookie")
+//                    appDelegate.loadDataForStart()
+                }
+            }
+        }
+    }
 }

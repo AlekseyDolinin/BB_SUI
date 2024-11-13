@@ -10,6 +10,7 @@ extension InputCodeTenantView {
         var indexSegment = 0
         var code = ""
         var openAuthView: Bool = false
+        var openHome: Bool = false
         
         func sendCode() {
             Task(priority: .userInitiated) {

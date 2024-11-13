@@ -1,5 +1,10 @@
 import SwiftUICore
+import UIKit
 import SwiftyJSON
+
+var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
+var BB_BGPrimary: Color!
+var BB_BGSecondary: Color!
 
 final class AppTheme {
     
@@ -26,11 +31,10 @@ final class AppTheme {
         let colors = themeJSON["colors"]
         print(colors)
         BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
-
+        BB_BGPrimary = Color(hex: colors["BGPrimary"].stringValue)
+        createBGSecondary()
         
         
-        
-//        UIColor.BB_BGPrimary = UIColor.hexStringToUIColor(hex: colors["BGPrimary"].stringValue)
 //        UIColor.BB_SecondaryUI = UIColor.hexStringToUIColor(hex: colors["TextUI1"].stringValue)
 //        UIColor.BB_TextUI = UIColor.hexStringToUIColor(hex: colors["TextPrimary"].stringValue)
 //        UIColor.BB_TextOnPrimary = UIColor.hexStringToUIColor(hex: colors["TextUIButtonChange"].stringValue)
@@ -67,13 +71,20 @@ final class AppTheme {
 //        UIColor.BB_SPOutline2 = createBB_SPOutline2()
     }
 
-//    private class func createBGSecondary() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return UIColor(hue: UIColor.BB_BGPrimary.hsba.h, saturation: UIColor.BB_BGPrimary.hsba.s, brightness: UIColor.BB_BGPrimary.hsba.b + 0.1, alpha: 1.0)
-//        } else {
-//            return UIColor(hue: UIColor.BB_BGPrimary.hsba.h, saturation: UIColor.BB_BGPrimary.hsba.s, brightness: UIColor.BB_BGPrimary.hsba.b - 0.04, alpha: 1.0)
-//        }
-//    }
+    private func createBGSecondary() {
+        let components = UIColor(BB_BGPrimary).cgColor.components
+        if AppTheme.shared.basicTheme == .dark {
+            let color = Color(hue: Double((components?[0])!),
+                              saturation: Double((components?[1])!),
+                              brightness: (components?[3])! + 0.1)
+            BB_BGSecondary = Color(color)
+        } else {
+            let color = Color(hue: Double((components?[0])!),
+                              saturation: Double((components?[1])!),
+                              brightness: (components?[3])! - 0.04)
+            BB_BGSecondary = Color(color)
+        }
+    }
 //    
 //    private class func createBGTertiary() -> UIColor {
 //        if AppTheme.basicTheme == "dark" {
@@ -234,4 +245,18 @@ final class AppTheme {
 //            return UIColor(hue: UIColor.BB_BGPrimary.hsba.h, saturation: UIColor.BB_BGPrimary.hsba.s, brightness: UIColor.BB_BGPrimary.hsba.b - 0.4, alpha: 1.0)
 //        }
 //    }
+}
+
+
+
+
+
+
+extension UIColor {
+    
+    var hsba:(h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+        return (h: h, s: s, b: b, a: a)
+    }
 }
