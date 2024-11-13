@@ -30,7 +30,7 @@ struct InputCodeTenantView: View {
                         .multilineTextAlignment(.center)
                         .frame(height: 64)
                         .foregroundStyle(.white)
-                        .background(.secondary)
+                        .background(.white.opacity(0.1))
                         .tint(.white)
                         .font(.ptRoot_Regular(size: 24))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -71,13 +71,11 @@ struct InputCodeTenantView: View {
                         Text("En").tag(1)
                         Text("Kz").tag(2)
                     }
+                    .frame(height: 60)
+                    .frame(width: 160)
                     .pickerStyle(.segmented)
-                    .frame(width: 140)
-                    .tint(.white)
-                    .colorInvert()
-                    .colorMultiply(.yellow)
-                    .background(.secondary)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .scaledToFit()
+                    .scaleEffect(CGSize(width: 1.2, height: 1.2))
                 }
             }
             .scrollDismissesKeyboard(.interactively)
