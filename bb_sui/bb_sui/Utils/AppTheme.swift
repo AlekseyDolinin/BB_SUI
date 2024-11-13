@@ -25,7 +25,7 @@ final class AppTheme {
     private func createColorTheme() {
         let colors = themeJSON["colors"]
         print(colors)
-        Color.BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
+        BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
 
         
         

@@ -1,7 +1,4 @@
 import SwiftUICore
 
-extension Color {
+var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
 
-    static var BB_PrimaryUI = Color(hex: "FFCC00")
-    
-}

@@ -9,6 +9,7 @@ extension InputCodeTenantView {
         var textError: String = ""
         var indexSegment = 0
         var code = ""
+        var openAuthView: Bool = false
         
         func sendCode() {
             Task(priority: .userInitiated) {
@@ -34,9 +35,29 @@ extension InputCodeTenantView {
         private func setDomain(domain: String) {
             LocalStorage.shared.hostname = domain
             // LoadAppData
-            print("LoadAppData")
-            LoadAppData.shared.getOptionsTenant()
-            LoadAppData.shared.getColorShemeTenant()
+            getOptionsTenant()
+            getColorShemeTenant()
+        }
+        
+        private func getOptionsTenant() {
+            Task(priority: .userInitiated) {
+                let link = Endpoint.path(.getOptionsTenant)
+                let response = await API.shared._request(link)
+                if let json = response?.json {
+                    LocalStorage.shared.optionsTenant = json
+                    openAuthView = true
+                }
+            }
+        }
+        
+        private func getColorShemeTenant() {
+            Task(priority: .userInitiated) {
+                let link = Endpoint.path(.getColorShemeTenant)
+                let response = await API.shared._request(link)
+                if let json = response?.json {
+                    AppTheme.shared.themeJSON = json
+                }
+            }
         }
     }
 }

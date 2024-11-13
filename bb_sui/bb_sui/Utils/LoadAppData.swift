@@ -3,26 +3,26 @@ class LoadAppData {
     
     static let shared = LoadAppData()
     
-    func getOptionsTenant() {
-        Task(priority: .userInitiated) {
-            let link = Endpoint.path(.getOptionsTenant)
-            let response = await API.shared._request(link)
-            if let json = response?.json {
-                print(json)
-                LocalStorage.shared.optionsTenant = json
-            }
-        }
-    }
-    
-    func getColorShemeTenant() {
-        Task(priority: .userInitiated) {
-            let link = Endpoint.path(.getColorShemeTenant)
-            let response = await API.shared._request(link)
-            if let json = response?.json {
-                AppTheme.shared.themeJSON = json
-            }
-        }
-    }
+//    func getOptionsTenant() {
+//        Task(priority: .userInitiated) {
+//            let link = Endpoint.path(.getOptionsTenant)
+//            let response = await API.shared._request(link)
+//            if let json = response?.json {
+//                print(json)
+//                LocalStorage.shared.optionsTenant = json
+//            }
+//        }
+//    }
+//    
+//    func getColorShemeTenant() {
+//        Task(priority: .userInitiated) {
+//            let link = Endpoint.path(.getColorShemeTenant)
+//            let response = await API.shared._request(link)
+//            if let json = response?.json {
+//                AppTheme.shared.themeJSON = json
+//            }
+//        }
+//    }
     
     func getPlayerSelfData() async {
 //        let link = Endpoint.path(.getUserData)

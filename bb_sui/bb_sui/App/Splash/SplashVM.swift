@@ -22,6 +22,7 @@ final class SplashVM: ObservableObject {
     }
     
         private func getData() {
+            print("getData")
     //        Task(priority: .userInitiated) {
     //            DispatchQueue.main.async { self.commentText = "Get options tenant" }
     //            await getOptionsTenant()

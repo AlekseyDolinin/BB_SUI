@@ -14,7 +14,7 @@ struct SplashView: View {
                     Spacer()
                     Image("logo_frame")
                         .renderingMode(.template)
-                        .foregroundStyle(Color.BB_PrimaryUI)
+                        .foregroundStyle(BB_PrimaryUI)
                     Spacer()
                     ProgressView()
                         .tint(.white)

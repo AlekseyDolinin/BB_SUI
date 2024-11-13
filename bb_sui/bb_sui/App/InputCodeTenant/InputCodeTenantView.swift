@@ -17,7 +17,7 @@ struct InputCodeTenantView: View {
                     
                     Image("logo_frame")
                         .renderingMode(.template)
-                        .foregroundStyle(Color.BB_PrimaryUI)
+                        .foregroundStyle(BB_PrimaryUI)
                     
                     let titleTexts = LocalStrings.shared.titleTexts
                     Text(titleTexts[viewModel.indexSegment])
@@ -84,8 +84,30 @@ struct InputCodeTenantView: View {
             .background(.black)
             .navigationBarBackButtonHidden(true)
         }
+        .sheet(isPresented: $viewModel.openAuthView) {
+            let url: URL = URL(string: getLinkAuth()) ?? URL(string: "google.com")!
+            AuthView(url: url)
+                .ignoresSafeArea(.all)
+        }
+        
+//        .navigationDestination(isPresented: $viewModel.openAuthView) {
+//            let url: URL = URL(string: getLinkAuth()) ?? URL(string: "google.com")!
+//            AuthView(url: url)
+//                .ignoresSafeArea
+//                .navigationBarBackButtonHidden(true)
+//        }
+        
         .alert(viewModel.textError, isPresented: $viewModel.error) {
             Button("OK", role: .cancel) { }
+        }
+    }
+    
+    private func getLinkAuth() -> String {
+        switch LocalStorage.shared.optionsTenant["oauth2_custom"].stringValue {
+        case "t1":
+            return "https://tinkoff.boxbattle.ru/"
+        default:
+            return LocalStorage.shared.url
         }
     }
 }
