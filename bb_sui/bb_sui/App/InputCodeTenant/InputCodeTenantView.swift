@@ -17,7 +17,7 @@ struct InputCodeTenantView: View {
                     
                     Image("logo_frame")
                         .renderingMode(.template)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(Color.BB_PrimaryUI)
                     
                     let titleTexts = LocalStrings.shared.titleTexts
                     Text(titleTexts[viewModel.indexSegment])
@@ -29,13 +29,13 @@ struct InputCodeTenantView: View {
                     TextField(placeholderInput[viewModel.indexSegment], text: $viewModel.code)
                         .multilineTextAlignment(.center)
                         .frame(height: 64)
-                        .foregroundStyle(.white)
                         .background(.white.opacity(0.1))
                         .tint(.white)
                         .font(.ptRoot_Regular(size: 24))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .autocorrectionDisabled()
                         .padding(.horizontal, 16)
+                        .colorScheme(.dark)
                     
                     Button(action: {
                         let needEnterCode = LocalStrings.shared.needEnterCode
@@ -76,6 +76,7 @@ struct InputCodeTenantView: View {
                     .pickerStyle(.segmented)
                     .scaledToFit()
                     .scaleEffect(CGSize(width: 1.2, height: 1.2))
+                    .colorScheme(.dark)
                 }
             }
             .scrollDismissesKeyboard(.interactively)

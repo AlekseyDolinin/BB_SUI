@@ -11,5 +11,10 @@
 	<array>
 		<string>PT Root UI_Regular.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>launchScreenBackground</string>
+	</dict>
 </dict>
 </plist>
