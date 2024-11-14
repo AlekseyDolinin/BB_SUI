@@ -9,8 +9,8 @@ extension InputCodeTenantView {
         var textError: String = ""
         var indexSegment = 0
         var code = ""
-        var openAuthView: Bool = false
-        var openHome: Bool = false
+        var presentAuthView: Bool = false
+        var presentHome: Bool = false
         var isLoading = false
 
         
@@ -50,7 +50,7 @@ extension InputCodeTenantView {
                 let response = await API.shared._request(link)
                 if let json = response?.json {
                     LocalStorage.shared.optionsTenant = json
-                    openAuthView = true
+                    presentAuthView = true
                 }
             }
         }
@@ -62,6 +62,15 @@ extension InputCodeTenantView {
                 if let json = response?.json {
                     AppTheme.shared.themeJSON = json
                 }
+            }
+        }
+        
+        func getLinkAuth() -> String {
+            switch LocalStorage.shared.optionsTenant["oauth2_custom"].stringValue {
+            case "t1":
+                return "https://tinkoff.boxbattle.ru/"
+            default:
+                return LocalStorage.shared.url
             }
         }
     }

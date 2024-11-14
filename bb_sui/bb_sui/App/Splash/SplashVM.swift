@@ -3,15 +3,20 @@ import SwiftUI
 final class SplashVM: ObservableObject {
     
     @Published var commentText = ""
-    @Published var openInputCodeTenant = false
+    @Published var presentInputCodeTenant = false
+    @Published var presentHomeView = false
     
     func initVM() {
         getVersionApp()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            if LocalStorage.shared.hostname == "" {
-                self.openInputCodeTenant = true
+            let hostname = UserDefaults.standard.string(forKey: .hostname)
+            if hostname == nil {
+                self.presentInputCodeTenant = true
             } else {
-                self.getData()
+                LocalStorage.shared.hostname = hostname!
+                // LoadAppData
+                self.getOptionsTenant()
+                self.getColorShemeTenant()
             }
         }
     }
@@ -21,17 +26,26 @@ final class SplashVM: ObservableObject {
         commentText = "Version \(version as? String ?? "")"
     }
     
-        private func getData() {
-            print("getData")
-    //        Task(priority: .userInitiated) {
-    //            DispatchQueue.main.async { self.commentText = "Get options tenant" }
-    //            await getOptionsTenant()
-    //            DispatchQueue.main.async { self.commentText = "Get color sheme" }
-    //            await getColorShemeTenant()
-    //            DispatchQueue.main.async { self.commentText = "Get player data" }
-    //            await getPlayerSelfData()
-    //            DispatchQueue.main.async { self.commentText = "Get game currencies" }
-    //            await getGameCurrencies()
-    //        }
+    private func getOptionsTenant() {
+        Task(priority: .userInitiated) {
+            let link = Endpoint.path(.getOptionsTenant)
+            let response = await API.shared._request(link)
+            if let json = response?.json {
+                LocalStorage.shared.optionsTenant = json
+            }
         }
+    }
+    
+    private func getColorShemeTenant() {
+        Task(priority: .userInitiated) {
+            let link = Endpoint.path(.getColorShemeTenant)
+            let response = await API.shared._request(link)
+            if let json = response?.json {
+                AppTheme.shared.themeJSON = json
+                await MainActor.run {
+                    presentHomeView = true
+                }
+            }
+        }
+    }
 }

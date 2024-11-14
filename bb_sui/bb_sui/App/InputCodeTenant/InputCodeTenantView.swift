@@ -88,37 +88,25 @@ struct InputCodeTenantView: View {
             .navigationBarBackButtonHidden(true)
             
         }
-        .sheet(isPresented: $viewModel.openAuthView) {
-            WebView(urlStr: getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
-                print("message: \(authSuccess)")
+        .sheet(isPresented: $viewModel.presentAuthView) {
+            WebView(urlStr: viewModel.getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
                 if authSuccess == true {
-                    print("authSuccess")
-                    viewModel.openHome = true
+                    viewModel.presentAuthView = false
+                    viewModel.presentHome = true
                 }
             })
             .ignoresSafeArea(.all)
         }
         
-        .navigationDestination(isPresented: $viewModel.openHome) {
+        .navigationDestination(isPresented: $viewModel.presentHome) {
             HomeView()
+                .navigationBarBackButtonHidden(true)
         }
         
         .alert(viewModel.textError, isPresented: $viewModel.error) {
             Button("OK", role: .cancel) { }
         }
     }
-    
-    
-    private func getLinkAuth() -> String {
-        switch LocalStorage.shared.optionsTenant["oauth2_custom"].stringValue {
-        case "t1":
-            return "https://tinkoff.boxbattle.ru/"
-        default:
-            return LocalStorage.shared.url
-        }
-    }
-    
-    
 }
 
 #Preview {

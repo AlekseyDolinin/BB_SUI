@@ -10,23 +10,8 @@ class MyWKDelegate: NSObject, WKNavigationDelegate {
     init(webCallBack: WebCallBack) {
         self.webCallBack = webCallBack
     }
-
-//    func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        webCallBack?(navigationAction.request.url?.absoluteString)
-//        decisionHandler(.allow)
-//    }
-//
-//    func webView(_: WKWebView, didFinish _: WKNavigation!) {
-//        print("End loading")
-//    }
 }
 
-//class MyScriptDelegate: NSObject, WKScriptMessageHandler {
-//    
-//    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
-//        print("WKScriptMessageHandler", message.body)
-//    }
-//}
 
 struct WebView: UIViewRepresentable {
     

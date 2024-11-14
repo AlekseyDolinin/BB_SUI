@@ -25,7 +25,7 @@ struct HomeView: View {
 //                        .font(.ptRoot_Regular(size: 12))
 //                }
             }
-            .navigationDestination(isPresented: $vm.openInputCodeTenant) {
+            .navigationDestination(isPresented: $vm.presentInputCodeTenant) {
                 InputCodeTenantView()
             }
             .onAppear {
