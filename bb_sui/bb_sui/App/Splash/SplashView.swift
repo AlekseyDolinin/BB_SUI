@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SplashView: View {
     
-    @ObservedObject private var vm = SplashVM()
-    
+    @State private var viewModel = ViewModel()
+        
     var body: some View {
         NavigationStack {
             ZStack {
@@ -20,20 +20,20 @@ struct SplashView: View {
                         .tint(.white)
                         .controlSize(.regular)
                     Spacer()
-                    Text(vm.commentText)
+                    Text(viewModel.commentText)
                         .foregroundStyle(.gray)
                         .font(.ptRoot_Regular(size: 12))
                 }
             }
-            .navigationDestination(isPresented: $vm.presentInputCodeTenant) {
+            .navigationDestination(isPresented: $viewModel.presentInputCodeTenant) {
                 InputCodeTenantView()
             }
-            .navigationDestination(isPresented: $vm.presentHomeView) {
+            .navigationDestination(isPresented: $viewModel.presentHomeView) {
                 TabbarView()
                     .navigationBarBackButtonHidden(true)
             }
             .onAppear {
-                self.vm.initVM()
+                viewModel.initVM()
             }
         }
     }
