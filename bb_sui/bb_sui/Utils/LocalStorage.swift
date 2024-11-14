@@ -1,9 +1,11 @@
 import SwiftyJSON
+import SwiftUI
 
+@Observable
 class LocalStorage {
     
     static let shared = LocalStorage()
-        
+            
     var hostname = "" {
         didSet {
             self.url = "https://" + hostname
@@ -18,10 +20,6 @@ class LocalStorage {
     var optionsTenant = JSON()
     
     var playerSelf: PlayerSelf!
-    
-//    var opponentInBattleLocation: UserRating!
-    
     var currency: Currency!
-    
-//    var store = Set<AnyCancellable>()
+
 }
