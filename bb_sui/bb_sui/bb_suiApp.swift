@@ -8,3 +8,12 @@ struct bb_suiApp: App {
         }
     }
 }
+
+//@main
+//struct bb_suiApp: App {
+//    var body: some Scene {
+//        WindowGroup {
+//            HomeView()
+//        }
+//    }
+//}

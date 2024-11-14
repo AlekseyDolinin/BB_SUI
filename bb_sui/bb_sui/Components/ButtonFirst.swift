@@ -6,7 +6,7 @@ struct ButtonFirst: ButtonStyle {
             .frame(minWidth: 0, maxWidth: .infinity)
             .frame(height: 48)
             .foregroundColor(.black)
-            .background(BB_PrimaryUI)
+            .background(AppTheme.BB_PrimaryUI)
             .cornerRadius(8)
             .padding(.horizontal, 16)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)

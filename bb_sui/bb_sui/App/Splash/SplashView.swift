@@ -14,7 +14,7 @@ struct SplashView: View {
                     Spacer()
                     Image("logo_frame")
                         .renderingMode(.template)
-                        .foregroundStyle(BB_PrimaryUI)
+                        .foregroundStyle(AppTheme.BB_PrimaryUI)
                     Spacer()
                     ProgressView()
                         .tint(.white)
@@ -29,7 +29,7 @@ struct SplashView: View {
                 InputCodeTenantView()
             }
             .navigationDestination(isPresented: $vm.presentHomeView) {
-                HomeView()
+                TabbarView()
                     .navigationBarBackButtonHidden(true)
             }
             .onAppear {

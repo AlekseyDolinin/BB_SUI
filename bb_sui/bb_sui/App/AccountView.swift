@@ -1,13 +1,15 @@
 import SwiftUI
 
-struct HomeView: View {
+struct AccountView: View {
         
+    @Binding var presentAccount: Bool
+    
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
                 .ignoresSafeArea()
             VStack(spacing: 0) {
-                NavigationBar()
+                NavigationBarTwo(presentAccount: $presentAccount)
                 NavigationStack {
                     AppTheme.BB_BGPrimary
 
@@ -18,6 +20,6 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    AccountView()
+//}

@@ -17,7 +17,7 @@ struct InputCodeTenantView: View {
                     
                     Image("logo_frame")
                         .renderingMode(.template)
-                        .foregroundStyle(BB_PrimaryUI)
+                        .foregroundStyle(AppTheme.BB_PrimaryUI)
                     
                     let titleTexts = LocalStrings.shared.titleTexts
                     Text(titleTexts[viewModel.indexSegment])

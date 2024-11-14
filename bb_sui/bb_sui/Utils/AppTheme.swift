@@ -2,13 +2,12 @@ import SwiftUICore
 import UIKit
 import SwiftyJSON
 
-var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
-var BB_BGPrimary: Color!
-var BB_BGSecondary: Color!
-
 final class AppTheme {
     
     static let shared = AppTheme()
+    static var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
+    static var BB_BGPrimary: Color! = .black
+    static var BB_BGSecondary: Color! = .gray
     
     enum AppColorTheme {
         case dark
@@ -30,8 +29,8 @@ final class AppTheme {
     private func createColorTheme() {
         let colors = themeJSON["colors"]
         print(colors)
-        BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
-        BB_BGPrimary = Color(hex: colors["BGPrimary"].stringValue)
+        AppTheme.BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
+        AppTheme.BB_BGPrimary = Color(hex: colors["BGPrimary"].stringValue)
         createBGSecondary()
         
         
@@ -72,17 +71,17 @@ final class AppTheme {
     }
 
     private func createBGSecondary() {
-        let components = UIColor(BB_BGPrimary).cgColor.components
+        let components = UIColor(AppTheme.BB_BGPrimary).cgColor.components
         if AppTheme.shared.basicTheme == .dark {
             let color = Color(hue: Double((components?[0])!),
                               saturation: Double((components?[1])!),
                               brightness: (components?[3])! + 0.1)
-            BB_BGSecondary = Color(color)
+            AppTheme.BB_BGSecondary = Color(color)
         } else {
             let color = Color(hue: Double((components?[0])!),
                               saturation: Double((components?[1])!),
                               brightness: (components?[3])! - 0.04)
-            BB_BGSecondary = Color(color)
+            AppTheme.BB_BGSecondary = Color(color)
         }
     }
 //    
