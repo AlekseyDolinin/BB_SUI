@@ -38,17 +38,20 @@ struct InputCodeTenantView: View {
                         .colorScheme(.dark)
                     
                     Button(action: {
-                        let needEnterCode = LocalStrings.shared.needEnterCode
                         if viewModel.code == "" {
                             viewModel.error = true
-                            viewModel.textError = needEnterCode[viewModel.indexSegment]
+                            viewModel.textError = LocalStrings.shared.needEnterCode[viewModel.indexSegment]
                         } else {
                             viewModel.sendCode()
                         }
                     }) {
-                        let titleSendButton = LocalStrings.shared.titleSendButton
-                        Text(titleSendButton[viewModel.indexSegment])
-                            .font(.ptRoot_Regular(size: 16))
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        } else {
+                            Text(LocalStrings.shared.titleSendButton[viewModel.indexSegment])
+                        }
+                        
                     }
                     .padding(.top, 32)
                     .buttonStyle(ButtonFirst())
@@ -83,6 +86,7 @@ struct InputCodeTenantView: View {
             .padding(.top, 16)
             .background(.black)
             .navigationBarBackButtonHidden(true)
+            
         }
         .sheet(isPresented: $viewModel.openAuthView) {
             WebView(urlStr: getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
@@ -120,3 +124,5 @@ struct InputCodeTenantView: View {
 #Preview {
     InputCodeTenantView()
 }
+
+

@@ -11,12 +11,16 @@ extension InputCodeTenantView {
         var code = ""
         var openAuthView: Bool = false
         var openHome: Bool = false
+        var isLoading = false
+
         
         func sendCode() {
+            isLoading = true
             Task(priority: .userInitiated) {
                 let codeTriming = code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
                 let link = Endpoint.path(.sendTenantCode(code: codeTriming))
                 let response: Response_? = await API.shared._request(link)
+                isLoading = false
                 if response?.code == 403 {
                     error.toggle()
                     textError = LocalStrings.shared.tenantNotFound[indexSegment]
