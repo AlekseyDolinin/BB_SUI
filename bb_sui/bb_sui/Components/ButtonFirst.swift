@@ -9,6 +9,6 @@ struct ButtonFirst: ButtonStyle {
             .background(.yellow)
             .cornerRadius(8)
             .padding(.horizontal, 16)
-            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
