@@ -40,10 +40,6 @@ struct WebView: UIViewRepresentable {
         }
     }
 
-//    private func getConfiguredWebview() -> WKWebView {
-//        return webView
-//    }
-
     func makeUIView(context _: Context) -> WKWebView {
         return webView
     }
@@ -58,8 +54,6 @@ struct WebView: UIViewRepresentable {
                     cookieDict["cookie_dict"] = cookie.properties as AnyObject?
                     // save cookies
                     UserDefaults.standard.set(cookieDict, forKey: .cookiesKey)
-//                    print("saveCookie")
-//                    appDelegate.loadDataForStart()
                 }
             }
         }

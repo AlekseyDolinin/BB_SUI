@@ -1,7 +1,9 @@
 import SwiftUI
+import Voyager
 
 struct SplashView: View {
     
+    @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
         
     var body: some View {
@@ -10,7 +12,6 @@ struct SplashView: View {
                 Color.black
                     .ignoresSafeArea()
                 VStack {
-                    Spacer()
                     Spacer()
                     Image("logo_frame")
                         .renderingMode(.template)
@@ -25,15 +26,11 @@ struct SplashView: View {
                         .font(.ptRoot_Regular(size: 12))
                 }
             }
-            .navigationDestination(isPresented: $viewModel.presentInputCodeTenant) {
-                InputCodeTenantView()
+            .onChange(of: viewModel.presentInputCodeTenant) {
+                router.present(.inputCodeTenant, option: .navigation)
             }
-            .navigationDestination(isPresented: $viewModel.presentHomeView) {
-                TabbarView()
-                    .navigationBarBackButtonHidden(true)
-            }
-            .onAppear {
-                viewModel.initVM()
+            .onChange(of: viewModel.presentGame) {
+                router.present(.game, option: .navigation)
             }
         }
     }

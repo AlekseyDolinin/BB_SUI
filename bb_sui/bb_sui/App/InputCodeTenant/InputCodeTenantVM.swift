@@ -20,10 +20,10 @@ extension InputCodeTenantView {
                 let codeTriming = code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
                 let link = Endpoint.path(.sendTenantCode(code: codeTriming))
                 let response: Response_? = await API.shared._request(link)
-                isLoading = false
                 if response?.code == 403 {
                     error.toggle()
                     textError = LocalStrings.shared.tenantNotFound[indexSegment]
+                    isLoading = false
                 }
                 if let domain = response?.json["domain"].string {
                     saveCodeTenant()
@@ -51,6 +51,7 @@ extension InputCodeTenantView {
                 if let json = response?.json {
                     LocalStorage.shared.optionsTenant = json
                     presentAuthView = true
+                    isLoading = false
                 }
             }
         }

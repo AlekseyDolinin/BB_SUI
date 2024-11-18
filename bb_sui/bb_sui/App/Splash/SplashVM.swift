@@ -4,12 +4,12 @@ extension SplashView {
     
     @Observable
     class ViewModel {
-        
+                
         var commentText = ""
         var presentInputCodeTenant = false
-        var presentHomeView = false
+        var presentGame = false
         
-        func initVM() {
+        init() {
             getVersionApp()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 let hostname = UserDefaults.standard.string(forKey: .hostname)
@@ -45,9 +45,7 @@ extension SplashView {
                 let response = await API.shared._request(link)
                 if let json = response?.json {
                     AppTheme.shared.themeJSON = json
-                    await MainActor.run {
-                        presentHomeView = true
-                    }
+                    presentGame = true
                 }
             }
         }

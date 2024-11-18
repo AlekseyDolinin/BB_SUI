@@ -4,16 +4,7 @@ import SwiftUI
 struct bb_suiApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            ContentView()
         }
     }
 }
-
-//@main
-//struct bb_suiApp: App {
-//    var body: some Scene {
-//        WindowGroup {
-//            HomeView()
-//        }
-//    }
-//}

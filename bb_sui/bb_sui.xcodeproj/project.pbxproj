@@ -10,6 +10,7 @@
 		1073525A2CDE94C20094412E /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 107352592CDE94C20094412E /* SVGKit */; };
 		1073525C2CDE94C20094412E /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1073525B2CDE94C20094412E /* SVGKitSwift */; };
 		1073525F2CDE94E90094412E /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 1073525E2CDE94E90094412E /* SwiftyJSON */; };
+		10EAD1522CEBD8A100EAF9BB /* Voyager in Frameworks */ = {isa = PBXBuildFile; productRef = 10EAD1512CEBD8A100EAF9BB /* Voyager */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10EAD1522CEBD8A100EAF9BB /* Voyager in Frameworks */,
 				1073525F2CDE94E90094412E /* SwiftyJSON in Frameworks */,
 				1073525C2CDE94C20094412E /* SVGKitSwift in Frameworks */,
 				1073525A2CDE94C20094412E /* SVGKit in Frameworks */,
@@ -77,6 +79,7 @@
 				107352592CDE94C20094412E /* SVGKit */,
 				1073525B2CDE94C20094412E /* SVGKitSwift */,
 				1073525E2CDE94E90094412E /* SwiftyJSON */,
+				10EAD1512CEBD8A100EAF9BB /* Voyager */,
 			);
 			productName = bb_sui;
 			productReference = 1073522D2CDD5D110094412E /* bb_sui.app */;
@@ -109,6 +112,7 @@
 			packageReferences = (
 				107352582CDE94C20094412E /* XCRemoteSwiftPackageReference "SVGKit" */,
 				1073525D2CDE94E90094412E /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				10EAD1502CEBD8A100EAF9BB /* XCRemoteSwiftPackageReference "Voyager" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1073522E2CDD5D110094412E /* Products */;
@@ -358,6 +362,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		10EAD1502CEBD8A100EAF9BB /* XCRemoteSwiftPackageReference "Voyager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bryan-vh/Voyager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -375,6 +387,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1073525D2CDE94E90094412E /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		10EAD1512CEBD8A100EAF9BB /* Voyager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10EAD1502CEBD8A100EAF9BB /* XCRemoteSwiftPackageReference "Voyager" */;
+			productName = Voyager;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,30 +1,25 @@
 import SwiftUI
+import Voyager
 
 struct InputCodeTenantView: View {
     
+    @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
     
     var body: some View {
-        
         ZStack {
-            
             Color.black
                 .ignoresSafeArea()
-            
             ScrollView {
-                
                 VStack {
-                    
                     Image("logo_frame")
                         .renderingMode(.template)
                         .foregroundStyle(AppTheme.BB_PrimaryUI)
-                    
                     let titleTexts = LocalStrings.shared.titleTexts
                     Text(titleTexts[viewModel.indexSegment])
                         .font(.ptRoot_Regular(size: 24))
                         .foregroundStyle(.white)
                         .padding(.top, 32)
-                    
                     let placeholderInput = LocalStrings.shared.placeholderInput
                     TextField(placeholderInput[viewModel.indexSegment], text: $viewModel.code)
                         .multilineTextAlignment(.center)
@@ -36,7 +31,7 @@ struct InputCodeTenantView: View {
                         .autocorrectionDisabled()
                         .padding(.horizontal, 16)
                         .colorScheme(.dark)
-                    
+                        .disabled(viewModel.isLoading)
                     Button(action: {
                         if viewModel.code == "" {
                             viewModel.error = true
@@ -51,14 +46,12 @@ struct InputCodeTenantView: View {
                         } else {
                             Text(LocalStrings.shared.titleSendButton[viewModel.indexSegment])
                         }
-                        
                     }
                     .padding(.top, 32)
                     .buttonStyle(ButtonFirst())
                     .opacity(viewModel.code.isEmpty ? 0.25 : 1.0)
-                    
+                    .disabled(viewModel.isLoading)
                     Spacer(minLength: 100)
-                    
                     let comments = LocalStrings.shared.comments
                     Text(comments[viewModel.indexSegment])
                         .font(.ptRoot_Regular(size: 16))
@@ -66,9 +59,7 @@ struct InputCodeTenantView: View {
                         .padding(.horizontal, 24)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
-                    
                     Spacer(minLength: 24)
-                    
                     Picker("", selection: $viewModel.indexSegment) {
                         Text("Ру").tag(0)
                         Text("En").tag(1)
@@ -86,27 +77,21 @@ struct InputCodeTenantView: View {
             .padding(.top, 16)
             .background(.black)
             .navigationBarBackButtonHidden(true)
-            
         }
         .sheet(isPresented: $viewModel.presentAuthView) {
             WebView(urlStr: viewModel.getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
                 if authSuccess == true {
                     viewModel.presentAuthView = false
                     viewModel.presentHome = true
+                    router.present(.game, option: .navigation)
                 }
             })
             .ignoresSafeArea(.all)
         }
-        
-        .navigationDestination(isPresented: $viewModel.presentHome) {
-            HomeView()
-                .navigationBarBackButtonHidden(true)
-        }
-        
         .alert(viewModel.textError, isPresented: $viewModel.error) {
             Button("OK", role: .cancel) { }
         }
-    }
+     }
 }
 
 #Preview {
