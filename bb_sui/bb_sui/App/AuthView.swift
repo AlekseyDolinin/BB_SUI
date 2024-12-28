@@ -13,7 +13,7 @@ class MyWKDelegate: NSObject, WKNavigationDelegate {
 }
 
 
-struct WebView: UIViewRepresentable {
+struct AuthView: UIViewRepresentable {
     
     private let webView: WKWebView
     private let delegate: MyWKDelegate

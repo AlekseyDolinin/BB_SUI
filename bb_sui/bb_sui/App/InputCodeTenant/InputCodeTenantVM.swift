@@ -10,16 +10,14 @@ extension InputCodeTenantView {
         var indexSegment = 0
         var code = ""
         var presentAuthView: Bool = false
-        var presentHome: Bool = false
         var isLoading = false
-
         
         func sendCode() {
             isLoading = true
             Task(priority: .userInitiated) {
                 let codeTriming = code.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
                 let link = Endpoint.path(.sendTenantCode(code: codeTriming))
-                let response: Response_? = await API.shared._request(link)
+                let response = await API.shared._request(link)
                 if response?.code == 403 {
                     error.toggle()
                     textError = LocalStrings.shared.tenantNotFound[indexSegment]
@@ -39,9 +37,7 @@ extension InputCodeTenantView {
         
         private func setDomain(domain: String) {
             LocalStorage.shared.hostname = domain
-            // LoadAppData
             getOptionsTenant()
-            getColorShemeTenant()
         }
         
         private func getOptionsTenant() {
@@ -52,16 +48,6 @@ extension InputCodeTenantView {
                     LocalStorage.shared.optionsTenant = json
                     presentAuthView = true
                     isLoading = false
-                }
-            }
-        }
-        
-        private func getColorShemeTenant() {
-            Task(priority: .userInitiated) {
-                let link = Endpoint.path(.getColorShemeTenant)
-                let response = await API.shared._request(link)
-                if let json = response?.json {
-                    AppTheme.shared.themeJSON = json
                 }
             }
         }

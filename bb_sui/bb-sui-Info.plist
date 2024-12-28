@@ -10,6 +10,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>PT Root UI_Regular.ttf</string>
+		<string>PT Root UI_Bold.ttf</string>
+		<string>PT Root UI_Medium.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>

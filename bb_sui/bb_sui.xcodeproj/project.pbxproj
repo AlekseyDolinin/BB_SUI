@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1073525A2CDE94C20094412E /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 107352592CDE94C20094412E /* SVGKit */; };
-		1073525C2CDE94C20094412E /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1073525B2CDE94C20094412E /* SVGKitSwift */; };
 		1073525F2CDE94E90094412E /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 1073525E2CDE94E90094412E /* SwiftyJSON */; };
+		10D6F5C42D04C8B9003CFF54 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 10D6F5C32D04C8B9003CFF54 /* Lottie */; };
 		10EAD1522CEBD8A100EAF9BB /* Voyager in Frameworks */ = {isa = PBXBuildFile; productRef = 10EAD1512CEBD8A100EAF9BB /* Voyager */; };
 /* End PBXBuildFile section */
 
@@ -32,8 +31,7 @@
 			files = (
 				10EAD1522CEBD8A100EAF9BB /* Voyager in Frameworks */,
 				1073525F2CDE94E90094412E /* SwiftyJSON in Frameworks */,
-				1073525C2CDE94C20094412E /* SVGKitSwift in Frameworks */,
-				1073525A2CDE94C20094412E /* SVGKit in Frameworks */,
+				10D6F5C42D04C8B9003CFF54 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,10 +74,9 @@
 			);
 			name = bb_sui;
 			packageProductDependencies = (
-				107352592CDE94C20094412E /* SVGKit */,
-				1073525B2CDE94C20094412E /* SVGKitSwift */,
 				1073525E2CDE94E90094412E /* SwiftyJSON */,
 				10EAD1512CEBD8A100EAF9BB /* Voyager */,
+				10D6F5C32D04C8B9003CFF54 /* Lottie */,
 			);
 			productName = bb_sui;
 			productReference = 1073522D2CDD5D110094412E /* bb_sui.app */;
@@ -110,9 +107,9 @@
 			mainGroup = 107352242CDD5D110094412E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				107352582CDE94C20094412E /* XCRemoteSwiftPackageReference "SVGKit" */,
 				1073525D2CDE94E90094412E /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				10EAD1502CEBD8A100EAF9BB /* XCRemoteSwiftPackageReference "Voyager" */,
+				10D6F5C22D04C8B9003CFF54 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1073522E2CDD5D110094412E /* Products */;
@@ -274,6 +271,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"bb_sui/Preview Content\"";
 				DEVELOPMENT_TEAM = 363MVUJWQJ;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bb-sui-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -303,6 +301,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"bb_sui/Preview Content\"";
 				DEVELOPMENT_TEAM = 363MVUJWQJ;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bb-sui-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -346,20 +345,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		107352582CDE94C20094412E /* XCRemoteSwiftPackageReference "SVGKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SVGKit/SVGKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		1073525D2CDE94E90094412E /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.2;
+			};
+		};
+		10D6F5C22D04C8B9003CFF54 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
 			};
 		};
 		10EAD1502CEBD8A100EAF9BB /* XCRemoteSwiftPackageReference "Voyager" */ = {
@@ -373,20 +372,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		107352592CDE94C20094412E /* SVGKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 107352582CDE94C20094412E /* XCRemoteSwiftPackageReference "SVGKit" */;
-			productName = SVGKit;
-		};
-		1073525B2CDE94C20094412E /* SVGKitSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 107352582CDE94C20094412E /* XCRemoteSwiftPackageReference "SVGKit" */;
-			productName = SVGKitSwift;
-		};
 		1073525E2CDE94E90094412E /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1073525D2CDE94E90094412E /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		10D6F5C32D04C8B9003CFF54 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10D6F5C22D04C8B9003CFF54 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		10EAD1512CEBD8A100EAF9BB /* Voyager */ = {
 			isa = XCSwiftPackageProductDependency;

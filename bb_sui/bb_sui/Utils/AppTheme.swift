@@ -6,8 +6,23 @@ final class AppTheme {
     
     static let shared = AppTheme()
     static var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
-    static var BB_BGPrimary: Color! = .black
-    static var BB_BGSecondary: Color! = .gray
+    static var BB_BGPrimary: Color = .black
+    static var BB_BGSecondary: Color = .gray
+    static var BB_BGTertiary: Color = .black
+    
+    static var BB_TextUI: Color = .white
+    static var BB_TextHigh: Color = .white
+    static var BB_TextPrimary: Color = .white
+    static var BB_TextSecondary: Color = .white
+    
+    static var BB_TextMedium: Color = .white
+    static var BB_TextDisabled: Color = .white
+    
+    static var BB_Red: Color = .red
+    static var BB_Green: Color = .green
+    static var BB_Warning: Color = .orange
+    
+    
     
     enum AppColorTheme {
         case dark
@@ -16,32 +31,55 @@ final class AppTheme {
     
     var themeJSON: JSON! {
         didSet {
-            setThemeColors()
+            if themeJSON != nil {
+                setThemeColors()
+            }
         }
     }
+    
     var basicTheme: AppColorTheme = .dark
     
     private func setThemeColors() {
+        print("colors: \(themeJSON["colors"])")
         basicTheme = themeJSON["basic_theme"].stringValue == "dark" ? .dark : .light
         createColorTheme()
     }
     
     private func createColorTheme() {
         let colors = themeJSON["colors"]
-        print(colors)
+        
         AppTheme.BB_PrimaryUI = Color(hex: colors["TextUI2"].stringValue)
         AppTheme.BB_BGPrimary = Color(hex: colors["BGPrimary"].stringValue)
-        createBGSecondary()
+        
+        AppTheme.BB_TextHigh = Color(hex: colors["TextPrimary"].stringValue)
+        AppTheme.BB_TextPrimary = Color(hex: colors["TextUI1"].stringValue)
+        AppTheme.BB_TextSecondary = Color(hex: colors["TextUI1"].stringValue)
+                
+        AppTheme.BB_TextUI = Color(hex: colors["TextPrimary"].stringValue)
+        AppTheme.BB_TextMedium = AppTheme.BB_TextUI.opacity(0.5)
+        AppTheme.BB_TextDisabled = AppTheme.BB_TextUI.opacity(0.5)
+        
+        AppTheme.BB_BGSecondary = setColor(basic: AppTheme.BB_BGPrimary, dark: 0.1, light: -0.04)
+        AppTheme.BB_BGTertiary = setColor(basic: AppTheme.BB_BGPrimary, dark: -0.06, light: -0.06)
+                
+        AppTheme.BB_Red = Color(hex: colors["FixedUIRed"].stringValue)
+        AppTheme.BB_Green = Color(hex: colors["FixedUIGreen"].stringValue)
+        AppTheme.BB_Warning = Color(hex: colors["Warning"].stringValue)
+        
+        
+
+
+        
+        
+        
+        
+        
         
         
 //        UIColor.BB_SecondaryUI = UIColor.hexStringToUIColor(hex: colors["TextUI1"].stringValue)
 //        UIColor.BB_TextUI = UIColor.hexStringToUIColor(hex: colors["TextPrimary"].stringValue)
 //        UIColor.BB_TextOnPrimary = UIColor.hexStringToUIColor(hex: colors["TextUIButtonChange"].stringValue)
-//        UIColor.BB_RedUI = UIColor.hexStringToUIColor(hex: colors["FixedUIRed"].stringValue)
-//        UIColor.BB_GreenUI = UIColor.hexStringToUIColor(hex: colors["FixedUIGreen"].stringValue)
-//        UIColor.BB_WarningUI = UIColor.hexStringToUIColor(hex: colors["Warning"].stringValue)
 //        // other
-//        UIColor.BB_BGSecondary = AppTheme.createBGSecondary()
 //        UIColor.BB_BGTertiary = AppTheme.createBGTertiary()
 //        //
 //        UIColor.BB_SPPrimary = AppTheme.createSPPrimary()
@@ -59,7 +97,6 @@ final class AppTheme {
 //        // Text_ui
 //        UIColor.BB_TextPrimary = createBB_TextPrimary()
 //        UIColor.BB_TextSecondary = createBB_TextSecondary()
-//        UIColor.BB_TextHigh = createBB_TextHigh()
 //        UIColor.BB_TextMedium = createBB_TextMedium()
 //        UIColor.BB_TextDisabled = createBB_TextDisabled()
 //        UIColor.BB_TextOnPrimaryHigh = createBB_TextOnPrimaryHigh()
@@ -69,29 +106,38 @@ final class AppTheme {
 //        UIColor.BB_SPOutline1 = createBB_SPOutline1()
 //        UIColor.BB_SPOutline2 = createBB_SPOutline2()
     }
-
-    private func createBGSecondary() {
-        let components = UIColor(AppTheme.BB_BGPrimary).cgColor.components
+    
+    
+    private func setColor(basic: Color, dark: CGFloat, light: CGFloat) -> Color {
+        let components = UIColor(basic).cgColor.components
         if AppTheme.shared.basicTheme == .dark {
-            let color = Color(hue: Double((components?[0])!),
-                              saturation: Double((components?[1])!),
-                              brightness: (components?[3])! + 0.1)
-            AppTheme.BB_BGSecondary = Color(color)
+            return Color(hue:           Double(components![0]),
+                         saturation:    Double(components![1]),
+                         brightness:    Double(components![2]) + dark)
         } else {
-            let color = Color(hue: Double((components?[0])!),
-                              saturation: Double((components?[1])!),
-                              brightness: (components?[3])! - 0.04)
-            AppTheme.BB_BGSecondary = Color(color)
+            return Color(hue:           Double(components![0]),
+                         saturation:    Double(components![1]),
+                         brightness:    Double(components![2]) + light)
         }
     }
-//    
-//    private class func createBGTertiary() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return UIColor(hue:UIColor.BB_BGPrimary.hsba.h, saturation: UIColor.BB_BGPrimary.hsba.s, brightness: UIColor.BB_BGPrimary.hsba.b - 0.06, alpha: 1.0)
-//        } else {
-//            return UIColor(hue: UIColor.BB_BGPrimary.hsba.h, saturation: UIColor.BB_BGPrimary.hsba.s, brightness: UIColor.BB_BGPrimary.hsba.b - 0.06, alpha: 1.0)
-//        }
+    
+
+    
+//    private class func createBB_TextPrimary() -> Color {
+//        return .BB_PrimaryUI
 //    }
+    
+//        private static func createBB_TextHigh() -> UIColor {
+//            if AppTheme.basicTheme == "dark" {
+//                return .BB_TextUI
+//            } else {
+//                return .BB_TextUI
+//            }
+//        }
+    
+    
+//
+
 //    
 //    private class func createSPPrimary() -> UIColor {
 //        if AppTheme.basicTheme == "dark" {
@@ -164,30 +210,9 @@ final class AppTheme {
 //            return .BB_SecondaryUI
 //        }
 //    }
+//
 //    
-//    private class func createBB_TextPrimary() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return .BB_PrimaryUI
-//        } else {
-//            return .BB_PrimaryUI
-//        }
-//    }
-//    
-//    private class func createBB_TextSecondary() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return .BB_SecondaryUI
-//        } else {
-//            return .BB_SecondaryUI
-//        }
-//    }
-//    
-//    private static func createBB_TextHigh() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return .BB_TextUI
-//        } else {
-//            return .BB_TextUI
-//        }
-//    }
+
 //    
 //    private class func createBB_TextMedium() -> UIColor {
 //        if AppTheme.basicTheme == "dark" {
@@ -196,15 +221,7 @@ final class AppTheme {
 //            return .BB_TextUI.withAlphaComponent(0.7)
 //        }
 //    }
-//    
-//    private class func createBB_TextDisabled() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return .BB_TextUI.withAlphaComponent(0.5)
-//        } else {
-//            return .BB_TextUI.withAlphaComponent(0.5)
-//        }
-//    }
-//    
+
 //    private class func createBB_TextOnPrimaryHigh() -> UIColor {
 //        if AppTheme.basicTheme == "dark" {
 //            return .BB_TextOnPrimary.withAlphaComponent(0.9)

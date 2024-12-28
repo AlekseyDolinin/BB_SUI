@@ -5,7 +5,7 @@ struct SplashView: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
-        
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -23,15 +23,18 @@ struct SplashView: View {
                     Spacer()
                     Text(viewModel.commentText)
                         .foregroundStyle(.gray)
-                        .font(.ptRoot_Regular(size: 12))
+                        .font(.ptRoot_Regular(size: .size_12))
                 }
             }
-            .onChange(of: viewModel.presentInputCodeTenant) {
-                router.present(.inputCodeTenant, option: .navigation)
-            }
-            .onChange(of: viewModel.presentGame) {
-                router.present(.game, option: .navigation)
-            }
+        }
+        .onChange(of: viewModel.presentInputCodeTenant) {
+            router.present(.inputCodeTenant, option: .navigation)
+        }
+        .onChange(of: viewModel.goToGame) {
+            router.present(.game, option: .navigation)
+        }
+        .task {
+            viewModel.startSetVM()
         }
     }
 }

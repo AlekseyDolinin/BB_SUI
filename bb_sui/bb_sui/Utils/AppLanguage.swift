@@ -2,13 +2,12 @@ import SwiftyJSON
 import UIKit
 import Combine
 
-public var gDict: JSON!
-
+@Observable
 final class AppLanguage {
     
     static let shared = AppLanguage()
         
-    @Published var dict = JSON()
+    var dict = JSON()
     
     var language = "ru-RU"
     
@@ -17,7 +16,7 @@ final class AppLanguage {
     func setLanguage(languageFromCookie: String) {
         language = languageFromCookie
         // первая установка словаря
-        if gDict == nil && taskFirstLoadDictionary == nil {
+        if taskFirstLoadDictionary == nil {
             taskFirstLoadDictionary = Task(priority: .userInitiated) {
                 await getDictionary()
                 taskFirstLoadDictionary = nil
@@ -27,26 +26,23 @@ final class AppLanguage {
     
     private func getDictionary() async {
         let link = Endpoint.path(.getLanguageDictionary)
-        let json = await API.shared._request(link)
-        if let json = json {
-//            gDict = json
-//            dict = json
+        let response = await API.shared._request(link)
+        if let json = response?.json {
+            dict = json
+//            print(json)
         }
     }
         
-    func changeLanguageFromMenuApp(index: Int) {
-        if index == 0 { language = "ru-RU" }
-        if index == 1 { language = "en-US" }
+    func changeLanguageFromMenuApp() {
         Task(priority: .userInitiated) {
             await changeLanguageInBack()
             await getDictionary()
-            print(gDict)
         }
     }
     
     private func changeLanguageInBack() async {
         let parameters: [String : Any] = ["lang_code": language]
         let link = Endpoint.path(.lang)
-        _ = await API.shared._request(link, method: .post, parameters: parameters)
+        let _ = await API.shared._request(link, method: .post, parameters: parameters)
     }
 }

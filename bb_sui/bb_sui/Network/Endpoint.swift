@@ -92,7 +92,7 @@ enum Endpoint {
     case sendIDsPagesGuide
     case getColorShemeTenant
     case getModes
-    case getNews
+    case getStories
     case sendIDsPartsNewSee
     case checkAutoAssignment
     case getHint
@@ -213,12 +213,19 @@ enum Endpoint {
     case getPlayerCustomFields
     case getMyResultEventChain(eventsChainsID: Int)
     case completedTesting(idTesting: Int)
+    case getWidgets
+    
+    
     
     
     public static func path(_ type: Endpoint) -> String {
         
         switch type {
            
+            
+        case .getWidgets:
+            return LocalStorage.shared.url + "/game/api/v4/widgets/"
+            
         case .completedTesting(let idTesting):
             return LocalStorage.shared.url + "/game/api/v4/testings/\(idTesting)/complete/"
             
@@ -609,10 +616,13 @@ enum Endpoint {
         case .sendIDsPagesOnboarding:
             return LocalStorage.shared.url + "/game/api/v4/onboarding/cancel/"
             
+        case .getGuides:
+            return LocalStorage.shared.url + "/game/api/v4/guides/"
+            
         case .getModes:
             return LocalStorage.shared.url + "/game/api/v5/trial/"
             
-        case .getNews:
+        case .getStories:
             return LocalStorage.shared.url + "/game/api/v4/news/"
             
         case .sendIDsPagesGuide:

@@ -19,7 +19,12 @@ class LocalStorage {
     // опции тенанта
     var optionsTenant = JSON()
     
-    var playerSelf: PlayerSelf!
+    var playerSelf = PlayerSelf()
     var currency: Currency!
 
+    var guides = [Guide]()
+    var guideRequired = false
+    var pagesOnboarding = [PageOnboarding]()
+    
+    var selectStory = Story()
 }

@@ -1,45 +1,43 @@
 import Foundation
-import SVGKit
 import SwiftyJSON
 import UIKit
-import Combine
 
-typealias Response_ = (json: JSON, code: Int)
+typealias Response_ = (json: JSON, code: Int, data: Data)
 
 final class API: NSObject {
     
-    public static let shared = API()
+    static let shared = API()
         
-//    static var imageCash = NSCache<NSString, UIImage>()
+    static var imageCash = NSCache<NSString, UIImage>() 
         
-//    ///
-//    public func _requestImage(link: String) async -> UIImage {
-//        let fullLink = URL(string: link)?.scheme == nil ? (LocalStorage.shared.url + link) : link
-//        // проверка есть ли закешированое изображение
-//        if let cashImage = API.imageCash.object(forKey: fullLink as NSString) {
-//            return cashImage
-//        } else {
-//            guard let url = URL(string: fullLink) else { return UIImage() }
-//            var request = URLRequest(url: url)
-//            setCookieInRequest(&request)
-//            request.httpMethod = HTTPMethod.get.rawValue
-//            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//            request.addValue("application/json", forHTTPHeaderField: "Accept")
-//            do {
-//                let (data, _) = try await URLSession.shared.data(for: request)
-//                guard let image = UIImage(data: data) else { return UIImage() }
-//                API.imageCash.setObject(image, forKey: url.absoluteString as NSString)
-//                return image
-//            } catch {
-//                print("Ошибка: \(error)")
-//                return UIImage()
-//            }
-//        }
-//    }
+    ///
+    func _requestImage(link: String) async -> UIImage {
+        let fullLink = URL(string: link)?.scheme == nil ? (LocalStorage.shared.url + link) : link
+        // проверка есть ли закешированое изображение
+        if let cashImage = API.imageCash.object(forKey: fullLink as NSString) {
+            return cashImage
+        } else {
+            guard let url = URL(string: fullLink) else { return UIImage() }
+            var request = URLRequest(url: url)
+            setCookieInRequest(&request)
+            request.httpMethod = HTTPMethod.get.rawValue
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            do {
+                let (data, _) = try await URLSession.shared.data(for: request)
+                guard let image = UIImage(data: data) else { return UIImage() }
+                API.imageCash.setObject(image, forKey: url.absoluteString as NSString)
+                return image
+            } catch {
+                print("Ошибка: \(error)")
+                return UIImage()
+            }
+        }
+    }
     
     
 //    ///
-//    public func getSVG(url: URL) async -> UIImage {
+//    func getSVG(url: URL) async -> UIImage {
 //        var request = URLRequest(url: url)
 //        setCookieInRequest(&request)
 //        do {
@@ -55,7 +53,7 @@ final class API: NSObject {
     
     
     ///
-    public func _request(_ link: String,
+    func _request(_ link: String,
                          method: HTTPMethod = .get,
                          parameters: Any? = nil,
                          needCookie: Bool = true) async -> Response_? {
@@ -75,18 +73,19 @@ final class API: NSObject {
             }
         }
         do {
-            let session = URLSession(configuration: URLSessionConfiguration.default,  delegate: self, delegateQueue: .current)
+            let session = URLSession(configuration: URLSessionConfiguration.default,
+                                     delegate: nil,
+                                     delegateQueue: .current)
             let (data, response) = try await session.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else { return nil }
             getCookies(response: httpResponse)
-            return Response_(json: JSON(data), code: httpResponse.statusCode)
+            return Response_(json: JSON(data), code: httpResponse.statusCode, data: data)
         } catch {
 //            ErrorAlert.shared.show(detail: error.localizedDescription)
 //            print("Неожиданная_ошибка_: \(error.localizedDescription.debugDescription).")
             return nil
         }
     }
-    
     
 //    ///
 //    func sendMultipartFormData(dataRequest: MultipartFormDataRequest, completion: @escaping () -> ()) {
@@ -140,7 +139,7 @@ final class API: NSObject {
 //    }
     
     ///
-    public func setCookieInRequest(_ request_: inout URLRequest) {
+    func setCookieInRequest(_ request_: inout URLRequest) {
         guard let savedCookie = UserDefaults.standard.dictionary(forKey: .cookiesKey) else { return }
         guard let dictionary = savedCookie["cookie_dict"] as? Dictionary<String, Any> else { return }
         guard let value: String = dictionary["Value"] as? String else { return }
@@ -149,7 +148,7 @@ final class API: NSObject {
         request_.setValue(cookies_header, forHTTPHeaderField: "Cookie")
     }
     
-    public enum HTTPMethod: String {
+    enum HTTPMethod: String {
         case get     = "GET"
         case post    = "POST"
         case put     = "PUT"
@@ -158,13 +157,13 @@ final class API: NSObject {
     
 }
 
-extension API: URLSessionDelegate {
-    
-    public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: (any Error)?) {
-        print(2)
-    }
-    
-    public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        print(4)
-    }
-}
+//extension API: URLSessionDelegate {
+//    
+//    public func urlSession(_ session: URLSession, didBecomeInvalidWithError error: (any Error)?) {
+//        print("didBecomeInvalidWithError")
+//    }
+//    
+//    public func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+//        print("urlSessionDidFinishEvents")
+//    }
+//}

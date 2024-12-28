@@ -17,7 +17,7 @@ struct InputCodeTenantView: View {
                         .foregroundStyle(AppTheme.BB_PrimaryUI)
                     let titleTexts = LocalStrings.shared.titleTexts
                     Text(titleTexts[viewModel.indexSegment])
-                        .font(.ptRoot_Regular(size: 24))
+                        .font(.ptRoot_Regular(size: .size_24))
                         .foregroundStyle(.white)
                         .padding(.top, 32)
                     let placeholderInput = LocalStrings.shared.placeholderInput
@@ -26,7 +26,7 @@ struct InputCodeTenantView: View {
                         .frame(height: 64)
                         .background(.white.opacity(0.1))
                         .tint(.white)
-                        .font(.ptRoot_Regular(size: 24))
+                        .font(.ptRoot_Regular(size: .size_24))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .autocorrectionDisabled()
                         .padding(.horizontal, 16)
@@ -48,13 +48,14 @@ struct InputCodeTenantView: View {
                         }
                     }
                     .padding(.top, 32)
+                    .padding(.horizontal)
                     .buttonStyle(ButtonFirst())
                     .opacity(viewModel.code.isEmpty ? 0.25 : 1.0)
                     .disabled(viewModel.isLoading)
                     Spacer(minLength: 100)
                     let comments = LocalStrings.shared.comments
                     Text(comments[viewModel.indexSegment])
-                        .font(.ptRoot_Regular(size: 16))
+                        .font(.ptRoot_Regular(size: .size_16))
                         .foregroundStyle(.gray)
                         .padding(.horizontal, 24)
                         .multilineTextAlignment(.center)
@@ -79,11 +80,10 @@ struct InputCodeTenantView: View {
             .navigationBarBackButtonHidden(true)
         }
         .sheet(isPresented: $viewModel.presentAuthView) {
-            WebView(urlStr: viewModel.getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
+            AuthView(urlStr: viewModel.getLinkAuth(), webCallBack: { (authSuccess: Bool?) in
                 if authSuccess == true {
                     viewModel.presentAuthView = false
-                    viewModel.presentHome = true
-                    router.present(.game, option: .navigation)
+                    router.updateRoot(.splash)
                 }
             })
             .ignoresSafeArea(.all)
@@ -91,7 +91,7 @@ struct InputCodeTenantView: View {
         .alert(viewModel.textError, isPresented: $viewModel.error) {
             Button("OK", role: .cancel) { }
         }
-     }
+    }
 }
 
 #Preview {

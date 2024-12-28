@@ -8,7 +8,6 @@ struct ButtonFirst: ButtonStyle {
             .foregroundColor(.black)
             .background(AppTheme.BB_PrimaryUI)
             .cornerRadius(8)
-            .padding(.horizontal, 16)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }

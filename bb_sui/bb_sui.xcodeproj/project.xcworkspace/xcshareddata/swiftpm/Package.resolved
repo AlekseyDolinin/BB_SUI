@@ -1,31 +1,13 @@
 {
-  "originHash" : "dd844ae7d68d8eda6b9c71beb88798f628ac7b29aa5bda867f5e0a8ef91176ef",
+  "originHash" : "07ed6274e24a7d351f3325e7b24085f1b06fbf38cd0ba10816626d33d99a79a0",
   "pins" : [
     {
-      "identity" : "cocoalumberjack",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/CocoaLumberjack/CocoaLumberjack.git",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
       "state" : {
-        "revision" : "4b8714a7fb84d42393314ce897127b3939885ec3",
-        "version" : "3.8.5"
-      }
-    },
-    {
-      "identity" : "svgkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SVGKit/SVGKit",
-      "state" : {
-        "revision" : "58152b9f7c85eab239160b36ffdfd364aa43d666",
-        "version" : "3.0.0"
-      }
-    },
-    {
-      "identity" : "swift-log",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-log",
-      "state" : {
-        "revision" : "9cb486020ebf03bfa5b5df985387a14a98744537",
-        "version" : "1.6.1"
+        "revision" : "b842598f1295f3ffa1475b1580672d1fe5b83580",
+        "version" : "4.5.0"
       }
     },
     {
