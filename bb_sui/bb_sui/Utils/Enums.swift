@@ -89,6 +89,12 @@ enum TypeQuestion {
     case unowned
 }
 
+enum ForceNavigationStories {
+    case nextSectionStory
+    case prewSectionStory
+    case currentSectionStartAgain
+    case none
+}
 
 // ========================================================================================
 
