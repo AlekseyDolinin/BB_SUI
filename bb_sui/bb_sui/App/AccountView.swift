@@ -1,27 +1,20 @@
 import SwiftUI
 import Voyager
 
-struct AccountView: View {
-    
-    @EnvironmentObject var router: Router<AppRoute>
+struct AccountView: View, Copyable {
         
-    var btnBack: some View {
-        Button(action: {
-            self.router.dismiss()
-        }) {
-            Image(systemName: "arrow.left")
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(.white)
-        }
-    }
+    @EnvironmentObject var router: Router<AppRoute>
     
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
                 .ignoresSafeArea()
+            VStack {
+                NavigationBarOnlyBack()
+                Spacer()
+            }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: btnBack)
+        .navigationBarHidden(true)
     }
 }
 

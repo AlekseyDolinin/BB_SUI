@@ -12,7 +12,3 @@ struct CircleView: View {
             .opacity(0.9)
     }
 }
-
-#Preview {
-    SelectGameView()
-}

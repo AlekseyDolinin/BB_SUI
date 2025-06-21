@@ -17,7 +17,7 @@ struct WidgetCell: View {
                 .opacity(0.5)
                 .background(.black)
         }
-        .frame(width: UIScreen.main.bounds.width - 32)
+        .frame(width: UIScreen.main.bounds.width - 16)
         .frame(height: 160)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .overlay{

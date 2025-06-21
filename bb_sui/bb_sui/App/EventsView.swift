@@ -1,16 +1,16 @@
 import SwiftUI
 import Voyager
 
-struct AdminPanelView: View {
+struct EventsView: View, Copyable {
         
     @EnvironmentObject var router: Router<AppRoute>
-        
+    
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
                 .ignoresSafeArea()
             VStack {
-                NavigationBarOnlyBack()
+                NavigationBarForTabbar()
                 Spacer()
             }
         }
@@ -19,5 +19,5 @@ struct AdminPanelView: View {
 }
 
 #Preview {
-    AdminPanelView()
+    EventsView()
 }

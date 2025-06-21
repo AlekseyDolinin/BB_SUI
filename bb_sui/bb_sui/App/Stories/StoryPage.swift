@@ -53,26 +53,22 @@ struct StoryPage: View {
             VStack(spacing: 16) {
                 Spacer()
                 Button(action: {
-
+                    print("121212")
                 }) {
                     Text("Продолжить сеанс")
                 }
                 .buttonStyle(ButtonFirst())
                 
-                Text("erverv rvervr")
-                    .padding(.horizontal)
-                    .frame(height: 32)
-                    .background(.white)
-                    .cornerRadius(16)
             }
             .padding(.horizontal)
-            .task(priority: .userInitiated) {
-                if section.backgroundImage != "" {
-                    bgImage = await API.shared._requestImage(link: section.backgroundImage)
-                }
-                if section.image != "" {
-                    contentImage = await API.shared._requestImage(link: section.image)
-                }
+            .padding(.bottom, 32)
+        }
+        .task(priority: .userInitiated) {
+            if section.backgroundImage != "" {
+                bgImage = await API.shared._requestImage(link: section.backgroundImage)
+            }
+            if section.image != "" {
+                contentImage = await API.shared._requestImage(link: section.image)
             }
         }
     }

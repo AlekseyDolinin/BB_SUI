@@ -2,27 +2,33 @@ import SwiftUI
 import Voyager
 
 struct GameView: View {
-            
-    var dict = AppLanguage.shared.dict
-    
+                    
     var body: some View {
-        TabView {
+        TabView() {
             HomeView()
                 .tabItem {
                     Image("homeIcon")
-                    Text(dict["home"].stringValue)
+                    Text(AppLanguage.shared.dict["home"].stringValue)
                 }
+                .tag(1)
             SelectGameView()
                 .tabItem {
                     Image("gamesIcon")
-                    Text(dict["games_and_rewards"].stringValue)
+                    Text(AppLanguage.shared.dict["games_and_rewards"].stringValue)
                 }
-            
+                .tag(2)
             LibraryView()
                 .tabItem {
                     Image("libraryIcon")
-                    Text(dict["knowledge_base"].stringValue)
+                    Text(AppLanguage.shared.dict["knowledge_base"].stringValue)
                 }
+                .tag(3)
+            EventsView()
+                .tabItem {
+                    Image("eventTabIcon")
+                    Text(AppLanguage.shared.dict["activities_event_multiple"].stringValue)
+                }
+                .tag(4)
         }
         .colorScheme(.dark)
         .accentColor(AppTheme.BB_PrimaryUI)

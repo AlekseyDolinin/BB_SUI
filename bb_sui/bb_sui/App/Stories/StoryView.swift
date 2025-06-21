@@ -35,6 +35,16 @@ struct StoryView: View {
                 }
                 Spacer()
             }
+            VStack {
+                Spacer()
+                Text("erverv rvervr")
+                    .font(.ptRoot_Regular(size: .size_12))
+                    .foregroundStyle(.black)
+                    .padding(.horizontal)
+                    .frame(height: 24)
+                    .background(.white).opacity(0.75)
+                    .cornerRadius(12)
+            }
         }
         .onChange(of: finishShowStory) {
             if finishShowStory == true {
@@ -47,20 +57,23 @@ struct StoryView: View {
             }
         }
         .onTapGesture(count: 1, coordinateSpace: .global) { location in
-            if location.x < UIScreen.main.bounds.midX {
-                forceNavigation = .currentSectionStartAgain
-            } else {
-                forceNavigation = .nextSectionStory
+            if location.y < UIScreen.main.bounds.maxY - 120 {
+                if location.x < UIScreen.main.bounds.midX {
+                    forceNavigation = .currentSectionStartAgain
+                } else {
+                    forceNavigation = .nextSectionStory
+                }
             }
         }
         .onTapGesture(count: 2, coordinateSpace: .global) { location in
-            if location.x < UIScreen.main.bounds.midX {
-                forceNavigation = .prewSectionStory
-            } else {
-                forceNavigation = .nextSectionStory
+            if location.y < UIScreen.main.bounds.maxY - 120 {
+                if location.x < UIScreen.main.bounds.midX {
+                    forceNavigation = .prewSectionStory
+                } else {
+                    forceNavigation = .nextSectionStory
+                }
             }
         }
-        
         .onLongPressGesture(minimumDuration: 0) {
             print("Long press detected!")
             longPress = true

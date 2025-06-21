@@ -26,16 +26,15 @@ enum AppRoute: Route {
     
 }
 
-enum TabRoute: Route {
-    case home
-    case games
-    case library
-}
+//enum TabRoute: Route {
+//    case home
+//    case games
+//    case library
+//}
 
 struct ContentView: View {
     
     @StateObject var router = Router<AppRoute>(root: .splash)
-//    @StateObject var router = Router<AppRoute>(root: .selectGame)
     
     var body: some View {
         NavVoyagerView(router: router) { (route: AppRoute) in

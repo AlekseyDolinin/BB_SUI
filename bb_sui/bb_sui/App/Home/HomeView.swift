@@ -41,13 +41,12 @@ struct HomeView: View {
                                 .frame(height: 160)
                                 .padding(.bottom, 16)
                             })
-                            
-                            // scroll stories
+                            // MARK: - scroll stories
                             if !viewModel.storiesPinned.isEmpty || !viewModel.storiesBasic.isEmpty {
                                 ScrollView(.horizontal) {
                                     LazyHStack(alignment: .center, spacing: 8) {
                                         
-                                        // pinned story
+                                        // MARK: - pinned story
                                         LazyHStack(alignment: .center, spacing: 12) {
                                             ForEach(viewModel.storiesPinned) { story in
                                                 StoryPinnedCell(story: story)
@@ -64,7 +63,7 @@ struct HomeView: View {
                                         .background(AppTheme.BB_BGSecondary)
                                         .cornerRadius(16)
                                         
-                                        // basic story
+                                        // MARK: - basic story
                                         LazyHStack(alignment: .center, spacing: 10) {
                                             ForEach(viewModel.storiesBasic, id: \.id) { story in
                                                 StoryRowBasic(story: story)
@@ -80,12 +79,7 @@ struct HomeView: View {
                                 .scrollIndicators(.hidden)
                                 .frame(height: 120)
                             }
-                            //
-                            ButtonShowCalendar()
-                                .frame(height: 90)
-                                .padding(.vertical, 16)
-                            
-                            // Моё обучение
+                            // MARK: - my learning
                             VStack(alignment: .leading, spacing: 0, content: {
                                 HStack {
                                     TitlePrimery(title: "Моё обучение")
@@ -101,8 +95,9 @@ struct HomeView: View {
                                     .foregroundColor(.white)
                                     .buttonStyle(.borderless)
                                 }
+                                // MARK: - button select type preview
                                 HStack(alignment: .center, spacing: 0) {
-                                    // plate
+                                    // MARK: - plate
                                     Button(action: {
                                         viewModel.typeCellMyLearning = .plate
                                     }) {
@@ -114,7 +109,7 @@ struct HomeView: View {
                                     .foregroundColor(.white)
                                     .buttonStyle(.borderless)
                                     .opacity(viewModel.typeCellMyLearning == .plate ? 1 : 0.5)
-                                    // line
+                                    // MARK: - line
                                     Button(action: {
                                         viewModel.typeCellMyLearning = .line
                                     }) {
@@ -126,7 +121,6 @@ struct HomeView: View {
                                     .foregroundColor(.white)
                                     .buttonStyle(.borderless)
                                     .opacity(viewModel.typeCellMyLearning == .line ? 1 : 0.5)
-                                    //
                                     Spacer()
                                 }
                                 .padding(.leading, -8)
@@ -136,10 +130,10 @@ struct HomeView: View {
                         .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
                     }
-                    .listRowInsets(EdgeInsets())
                     .listRowBackground(Color.clear)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
                     .scrollClipDisabled(true)
-                    
                     ForEach(viewModel.myLearning, id: \.objectID) { myLearning in
                         if viewModel.typeCellMyLearning == .plate {
                             MyLearningPlateCell(myLearning: myLearning)
@@ -163,12 +157,25 @@ struct HomeView: View {
                         }
                     }
                     .padding(.horizontal, 8)
+                    // MARK: - section recomend content view
+                    Section {
+                        Button(action: {
+                            print("tabSelection tabSelection")
+                        }) {
+                            RecomendContentView()
+                        }
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(
+                        EdgeInsets(
+                            top: 0,
+                            leading: 8,
+                            bottom: 0,
+                            trailing: 8
+                        )
+                    )
                     
-                    RecomendContentView()
-                        .listRowBackground(Color.clear)
-                        .padding(.top, 16)
-                        .padding(.horizontal, -8)
-                        .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)
                 .scrollIndicators(.hidden)
@@ -180,9 +187,6 @@ struct HomeView: View {
                         trailing: 0
                     )
                 )
-//                RecomendContentView()
-//                    .padding(.top, 40)
-//                    .padding()
             }
         }
         .task {
