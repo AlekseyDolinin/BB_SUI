@@ -1,10 +1,23 @@
 import SwiftUI
+import Combine
 import SwiftyJSON
 
 extension SplashView {
     
     @Observable
-    class ViewModel: StateWSDelegate {
+    class ViewModel {
+        
+        private var cancellables: Set<AnyCancellable> = []
+        
+        func subscribe() {
+            cancellables.removeAll()
+            GSocket.shared.$isOpen
+                .sink { [weak self] gsIsOpen in
+                    if let gsIsOpen = gsIsOpen {
+                        self?.gwsOpen(gsIsOpen)
+                    }
+                }.store(in: &cancellables)
+        }
         
         var commentText = ""
         var presentInputCodeTenant = false
@@ -31,7 +44,7 @@ extension SplashView {
                     await getGuides()
                     await getOnboarding()
                     await getGameCurrencies()
-                    connectGSocket()
+                    GSocket.shared.connect()
                 } catch {
                     print("need auth")
                 }
@@ -119,18 +132,11 @@ extension SplashView {
             }
         }
         
-        private func connectGSocket() {
-            GSocket.shared.connect()
-            GSocket.shared.delegateWSState = self
-        }
-        
         func gwsOpen(_ isOpen: Bool) {
             goToGame = isOpen
             // проверка есть ли запущенные активности (идущие бои)
             GSocket.shared.send(parameters: ["type": "update_player_state"])
             GSocket.shared.send(parameters: ["type": "ready"])
         }
-        
-        func gwsReciveMessage(json: JSON) {}
     }
 }

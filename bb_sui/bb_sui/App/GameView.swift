@@ -2,10 +2,12 @@ import SwiftUI
 import Voyager
 
 struct GameView: View {
-                    
+       
+    @State private var tabSelection = 1
+    
     var body: some View {
-        TabView() {
-            HomeView()
+        TabView(selection: $tabSelection) {
+            HomeView(tabSelection: $tabSelection)
                 .tabItem {
                     Image("homeIcon")
                     Text(AppLanguage.shared.dict["home"].stringValue)
@@ -30,6 +32,7 @@ struct GameView: View {
                 }
                 .tag(4)
         }
+        .navigationBarBackButtonHidden()
         .colorScheme(.dark)
         .accentColor(AppTheme.BB_PrimaryUI)
         .onAppear() {
@@ -39,7 +42,10 @@ struct GameView: View {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
-        .navigationBarBackButtonHidden()
+        .onAppear {
+            print("!!!!!")
+        }
+        
     }
 }
 

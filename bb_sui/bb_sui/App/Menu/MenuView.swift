@@ -5,9 +5,7 @@ struct MenuView: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
-    
-    private var dict = AppLanguage.shared.dict
-    
+            
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
@@ -21,7 +19,7 @@ struct MenuView: View {
                                 Button(action: {
                                     self.router.present(.notoficationSet)
                                 }) {
-                                    Text(dict["notifications"].stringValue)
+                                    Text(AppLanguage.shared.dict["notifications"].stringValue)
                                         .foregroundStyle(AppTheme.BB_TextHigh)
                                         .font(.ptRoot_Medium(size: .size_20))
                                 }
@@ -29,7 +27,7 @@ struct MenuView: View {
                                 Button(action: {
                                     self.router.present(.feedbackApp)
                                 }) {
-                                    Text(dict["feedbackApplication"].stringValue)
+                                    Text(AppLanguage.shared.dict["feedbackApplication"].stringValue)
                                         .foregroundStyle(AppTheme.BB_TextHigh)
                                         .font(.ptRoot_Medium(size: .size_20))
                                 }
@@ -37,7 +35,7 @@ struct MenuView: View {
                                 Button(action: {
                                     self.router.dismiss()
                                 }) {
-                                    Text(dict["edit_profile_action"].stringValue)
+                                    Text(AppLanguage.shared.dict["edit_profile_action"].stringValue)
                                         .foregroundStyle(AppTheme.BB_TextHigh)
                                         .font(.ptRoot_Medium(size: .size_20))
                                 }
@@ -46,7 +44,7 @@ struct MenuView: View {
                                     let link = viewModel.getLinkAboutApp()
                                     router.present(.webView(link: link), option: .popover)
                                 }) {
-                                    Text(dict["aboutApplication"].stringValue)
+                                    Text(AppLanguage.shared.dict["aboutApplication"].stringValue)
                                         .foregroundStyle(AppTheme.BB_TextHigh)
                                         .font(.ptRoot_Medium(size: .size_20))
                                 }
@@ -67,11 +65,11 @@ struct MenuView: View {
                             .colorScheme(.dark)
                             Spacer()
                             Button(action: {
-                                self.router.dismiss()
+                                viewModel.isPresentAlertLogout = true
                             }) {
                                 Label(
                                     title: {
-                                        Text(dict["exit"].stringValue)
+                                        Text(AppLanguage.shared.dict["exit"].stringValue)
                                             .font(.ptRoot_Medium(size: .size_18))
                                     }, icon: {
                                         Image(systemName: "rectangle.portrait.and.arrow.right")
@@ -122,6 +120,26 @@ struct MenuView: View {
             appearance.setTitleTextAttributes([.foregroundColor: colorTitleSelect], for: .selected)
             appearance.setTitleTextAttributes([.foregroundColor: colorTitleNormal], for: .normal)
         }
+        .alert(isPresented: $viewModel.isPresentAlertLogout) {
+            Alert(
+                title: Text("Выйти из профиля?"),
+                message: Text("Для повторного входа понадобится ввод логина и пароля"),
+                primaryButton: .default(Text("Отмена")),
+                secondaryButton: .destructive(Text("Выйти"), action: {
+                    clearAndLogout()
+                })
+            )
+        }
+    }
+    
+    private func clearAndLogout() {
+        print("clearAndLogout")
+        UserDefaults.standard.removeObject(forKey: .cookiesKey)
+        UserDefaults.standard.removeObject(forKey: .codeTenant)
+        UserDefaults.standard.removeObject(forKey: .fcmToken)
+        UserDefaults.standard.removeObject(forKey: .tokenDeviceID)
+        UserDefaults.standard.removeObject(forKey: .hostname)
+        router.updateRoot(.inputCodeTenant)
     }
 }
 

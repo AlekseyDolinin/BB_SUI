@@ -65,7 +65,7 @@ struct NavigationBarForTabbar: View {
         .task {
             viewModel.getAvatar()
             viewModel.getOnboarding()
-            viewModel.addDelegate()
+//            viewModel.addDelegate()
         }
     }
 }
@@ -74,7 +74,7 @@ struct NavigationBarForTabbar: View {
 extension NavigationBarForTabbar {
     
     @Observable
-    class ViewModel: StateWSDelegate {
+    class ViewModel {
         
         var avatar = UIImage(named: "logo_frame")!
         var anotherDeviceLogin = false
@@ -89,25 +89,25 @@ extension NavigationBarForTabbar {
             print("!!!!!! getOnboarding   !!!!!!!")
         }
 
-        func addDelegate() {
-            GSocket.shared.delegateWSState = self
-        }
+//        func addDelegate() {
+//            GSocket.shared.delegateWSState = self
+//        }
         
-        func gwsOpen(_ isOpen: Bool) { }
+//        func gwsOpen(_ isOpen: Bool) { }
         
-        func gwsReciveMessage(json: JSON) {
-            switch json["type"] {
-            case "disconnect":
-                disconnect(json)
-            default:
-                break
-            }
-        }
+//        func gwsReciveMessage(json: JSON) {
+//            switch json["type"] {
+//            case "disconnect":
+//                disconnect(json)
+//            default:
+//                break
+//            }
+//        }
         
-        private func disconnect(_ json: JSON) {
-            if json["data"]["reason"] == "another_device_login" {
-                anotherDeviceLogin.toggle()
-            }
-        }
+//        private func disconnect(_ json: JSON) {
+//            if json["data"]["reason"] == "another_device_login" {
+//                anotherDeviceLogin.toggle()
+//            }
+//        }
     }
 }

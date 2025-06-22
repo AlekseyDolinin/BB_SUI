@@ -31,6 +31,6 @@ struct RecomendContentView: View {
 }
 
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

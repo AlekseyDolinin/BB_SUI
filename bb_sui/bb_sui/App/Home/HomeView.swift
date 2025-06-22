@@ -5,7 +5,8 @@ struct HomeView: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
-        
+    @Binding var tabSelection: Int
+    
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
@@ -160,7 +161,7 @@ struct HomeView: View {
                     // MARK: - section recomend content view
                     Section {
                         Button(action: {
-                            print("tabSelection tabSelection")
+                            tabSelection = 3
                         }) {
                             RecomendContentView()
                         }
@@ -195,9 +196,9 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}
 
 
 extension HomeView {

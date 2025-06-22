@@ -5,6 +5,8 @@ extension MenuView {
     @Observable
     class ViewModel {
         
+        var isPresentAlertLogout = false
+        
         var tagSegment: String = AppLanguage.shared.language {
             didSet {
                 AppLanguage.shared.language = tagSegment

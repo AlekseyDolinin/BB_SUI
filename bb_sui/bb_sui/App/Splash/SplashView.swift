@@ -32,14 +32,13 @@ struct SplashView: View {
             router.present(.inputCodeTenant, option: .navigation)
         }
         .onChange(of: viewModel.goToGame) {
-            router.present(.game, option: .navigation)
+            router.updateRoot(.game)
         }
         .task {
             viewModel.startSetVM()
         }
+        .onAppear {
+            viewModel.subscribe()
+        }
     }
 }
-
-//#Preview {
-//    SplashView()
-//}

@@ -138,7 +138,7 @@ final class API: NSObject {
 //        }
 //    }
     
-    ///
+    //
     func setCookieInRequest(_ request_: inout URLRequest) {
         guard let savedCookie = UserDefaults.standard.dictionary(forKey: .cookiesKey) else { return }
         guard let dictionary = savedCookie["cookie_dict"] as? Dictionary<String, Any> else { return }

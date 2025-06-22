@@ -48,6 +48,6 @@ struct IconStatus : View {
 }
 
 
-#Preview {
-    HomeView()
-}
+//#Preview {
+//    HomeView()
+//}

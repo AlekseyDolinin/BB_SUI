@@ -2,17 +2,13 @@ import SwiftyJSON
 import SwiftUI
 import Voyager
 
-protocol StateWSDelegate: AnyObject {
-    func gwsOpen(_ isOpen: Bool)
-    func gwsReciveMessage(json: JSON)
-}
-
 final class GSocket: NSObject, ObservableObject {
-        
-    weak var delegateWSState: StateWSDelegate?
-                
+                        
     static let shared = GSocket()
     var ws: WebSocket!
+    
+    @Published var json: JSON?
+    @Published var isOpen: Bool?
     
     func connect() {
         ws = WebSocket()
@@ -23,6 +19,8 @@ final class GSocket: NSObject, ObservableObject {
             ws = WebSocket(request: request, subProtocols: [])
             ws.services = [.Background]
             ws.delegate = self
+        } else {
+            print("hostname: \(LocalStorage.shared.hostname)")
         }
     }
     
@@ -42,13 +40,14 @@ final class GSocket: NSObject, ObservableObject {
 extension GSocket: WebSocketDelegate {
     
     func webSocketOpen() {
-        delegateWSState?.gwsOpen(true)
+        isOpen = true
     }
     
     func webSocketClose(_ code: Int, reason: String, wasClean: Bool) {
         print("code: \(code)")
         print("reason: \(reason)")
         print("wasClean: \(wasClean)")
+        isOpen = false
     }
     
     func webSocketError(_ error: NSError) {
@@ -56,10 +55,8 @@ extension GSocket: WebSocketDelegate {
     }
     
     func webSocketMessageText(_ text: String) {
-//        print(">>> : \(text)")
         do {
-            let json = try JSON(data: text.data(using: .utf8)!)
-            delegateWSState?.gwsReciveMessage(json: json)
+            self.json = try JSON(data: text.data(using: .utf8)!)
         } catch let error {
             print("error GS: \(error)")
         }
