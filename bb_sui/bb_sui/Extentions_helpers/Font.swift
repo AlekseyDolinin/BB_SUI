@@ -15,6 +15,16 @@ extension Font {
         case size_48 = 48
     }
     
+    enum FontStyle: String {
+        case regular = "Regular"
+        case medium = "Medium"
+        case bold = "Bold"
+    }
+    
+    static func ptRoot(size: FontSize, style: FontStyle) -> Font {
+        return Font.custom("PTRootUI-\(style.rawValue)", size: size.rawValue)
+    }
+    
     static func ptRoot_Regular(size: FontSize) -> Font {
         return Font.custom("PTRootUI-Regular", size: size.rawValue)
     }

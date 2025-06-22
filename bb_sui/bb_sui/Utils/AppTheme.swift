@@ -5,24 +5,25 @@ import SwiftyJSON
 final class AppTheme {
     
     static let shared = AppTheme()
+    
     static var BB_PrimaryUI: Color = Color(hex: "#f5e76e")
-    static var BB_BGPrimary: Color = .black
+    static var BB_BGPrimary: Color = Color(hex: "#1a1a1a")
     static var BB_BGSecondary: Color = .gray
     static var BB_BGTertiary: Color = .black
     
     static var BB_TextUI: Color = .white
-    static var BB_TextHigh: Color = .white
-    static var BB_TextPrimary: Color = .white
+    static var BB_TextHigh: Color = Color(hex: "#ffffff")
+    static var BB_TextPrimary: Color = Color(hex: "#ffffff")
     static var BB_TextSecondary: Color = .white
     
-    static var BB_TextMedium: Color = .white
-    static var BB_TextDisabled: Color = .white
+    static var BB_TextMedium: Color = .white.opacity(0.7)
+    static var BB_TextDisabled: Color = .white.opacity(0.5)
     
     static var BB_Red: Color = .red
     static var BB_Green: Color = .green
     static var BB_Warning: Color = .orange
     
-    
+    static var Surface_BB_00db: Color = .black
     
     enum AppColorTheme {
         case dark
@@ -56,7 +57,7 @@ final class AppTheme {
         AppTheme.BB_TextSecondary = Color(hex: colors["TextUI1"].stringValue)
                 
         AppTheme.BB_TextUI = Color(hex: colors["TextPrimary"].stringValue)
-        AppTheme.BB_TextMedium = AppTheme.BB_TextUI.opacity(0.5)
+        AppTheme.BB_TextMedium = AppTheme.BB_TextUI.opacity(0.7)
         AppTheme.BB_TextDisabled = AppTheme.BB_TextUI.opacity(0.5)
         
         AppTheme.BB_BGSecondary = setColor(basic: AppTheme.BB_BGPrimary, dark: 0.1, light: -0.04)
@@ -66,7 +67,7 @@ final class AppTheme {
         AppTheme.BB_Green = Color(hex: colors["FixedUIGreen"].stringValue)
         AppTheme.BB_Warning = Color(hex: colors["Warning"].stringValue)
         
-        
+        AppTheme.Surface_BB_00db = setColor(basic: AppTheme.BB_BGPrimary, dark: -0.06, light: -0.06)
 
 
         
@@ -77,7 +78,6 @@ final class AppTheme {
         
         
 //        UIColor.BB_SecondaryUI = UIColor.hexStringToUIColor(hex: colors["TextUI1"].stringValue)
-//        UIColor.BB_TextUI = UIColor.hexStringToUIColor(hex: colors["TextPrimary"].stringValue)
 //        UIColor.BB_TextOnPrimary = UIColor.hexStringToUIColor(hex: colors["TextUIButtonChange"].stringValue)
 //        // other
 //        UIColor.BB_BGTertiary = AppTheme.createBGTertiary()
@@ -86,7 +86,6 @@ final class AppTheme {
 //        UIColor.BB_SPSecondary = AppTheme.createSPSecondary()
 //        UIColor.BB_SPWhite = AppTheme.createSPWhite()
 //        // Surface
-//        UIColor.Surface_BB_00db = AppTheme.createSurface_BB_00db()
 //        UIColor.Surface_BB_01db = AppTheme.createSurface_BB_01db()
 //        UIColor.Surface_BB_02db = AppTheme.createSurface_BB_02db()
 //        UIColor.Surface_BB_03db = AppTheme.createSurface_BB_03db()
@@ -96,9 +95,6 @@ final class AppTheme {
 //        UIColor.DEL_SecondaryBRAND = AppTheme.createDEL_SecondaryBRAND()
 //        // Text_ui
 //        UIColor.BB_TextPrimary = createBB_TextPrimary()
-//        UIColor.BB_TextSecondary = createBB_TextSecondary()
-//        UIColor.BB_TextMedium = createBB_TextMedium()
-//        UIColor.BB_TextDisabled = createBB_TextDisabled()
 //        UIColor.BB_TextOnPrimaryHigh = createBB_TextOnPrimaryHigh()
 //        UIColor.BB_TextOnPrimaryMedium = createBB_TextOnPrimaryMedium()
 //        UIColor.BB_TextOnPrimaryDisabled = createBB_TextOnPrimaryDisabled()
@@ -127,14 +123,6 @@ final class AppTheme {
 //        return .BB_PrimaryUI
 //    }
     
-//        private static func createBB_TextHigh() -> UIColor {
-//            if AppTheme.basicTheme == "dark" {
-//                return .BB_TextUI
-//            } else {
-//                return .BB_TextUI
-//            }
-//        }
-    
     
 //
 
@@ -160,14 +148,6 @@ final class AppTheme {
 //            return .white.withAlphaComponent(0.5)
 //        } else {
 //            return .black.withAlphaComponent(0.5)
-//        }
-//    }
-//    
-//    private class func createSurface_BB_00db() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return UIColor.BB_BGTertiary
-//        } else {
-//            return UIColor.BB_BGTertiary
 //        }
 //    }
 //    
@@ -211,16 +191,7 @@ final class AppTheme {
 //        }
 //    }
 //
-//    
-
-//    
-//    private class func createBB_TextMedium() -> UIColor {
-//        if AppTheme.basicTheme == "dark" {
-//            return .BB_TextUI.withAlphaComponent(0.7)
-//        } else {
-//            return .BB_TextUI.withAlphaComponent(0.7)
-//        }
-//    }
+//
 
 //    private class func createBB_TextOnPrimaryHigh() -> UIColor {
 //        if AppTheme.basicTheme == "dark" {

@@ -14,7 +14,7 @@ class LocalStorage {
     var url: String = ""
     
     //
-    var userDataJSON: JSON!
+    var userDataJSON = JSON()
     
     // опции тенанта
     var optionsTenant = JSON()

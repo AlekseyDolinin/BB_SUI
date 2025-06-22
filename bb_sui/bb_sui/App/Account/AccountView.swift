@@ -11,8 +11,18 @@ struct AccountView: View, Copyable {
                 .ignoresSafeArea()
             VStack {
                 NavigationBarOnlyBack()
+                ScrollView {
+                    VStack {
+                        ContainerTopAccount()
+                        ContainerIMentor()
+                        ContainerAchivements()
+                    }
+                }
+                .scrollIndicators(.hidden)
                 Spacer()
             }
+            .padding(.horizontal, 8)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
         .navigationBarHidden(true)
     }
