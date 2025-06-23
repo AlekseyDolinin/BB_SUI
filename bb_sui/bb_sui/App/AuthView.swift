@@ -21,6 +21,8 @@ struct AuthView: UIViewRepresentable {
     
     internal init(urlStr: String, webCallBack: WebCallBack) {
         let config = WKWebViewConfiguration()
+        config.preferences.javaScriptCanOpenWindowsAutomatically = true
+        config.applicationNameForUserAgent = "Version/8.0.2 Safari/600.2.5"
         webView = WKWebView(frame: .zero, configuration: config)
         delegate = MyWKDelegate(webCallBack: webCallBack)
         webView.navigationDelegate = delegate
