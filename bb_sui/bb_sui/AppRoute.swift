@@ -1,4 +1,5 @@
 import Voyager
+import Combine
 import SwiftUI
 
 enum AppRoute: Route {
@@ -27,8 +28,9 @@ enum AppRoute: Route {
 }
 
 struct ContentView: View {
-    
+        
     @StateObject var router = Router<AppRoute>(root: .splash)
+    @State private var viewModel = ViewModel()
     
     var body: some View {
         NavVoyagerView(router: router) { (route: AppRoute) in
@@ -72,6 +74,35 @@ struct ContentView: View {
             case .story:
                 StoryView()
             }
+        }
+        .onAppear {
+            viewModel.subscribe()
+        }
+    }
+}
+
+
+extension ContentView {
+    
+    @Observable
+    class ViewModel {
+        
+        private var cancellables: Set<AnyCancellable> = []
+        
+        func subscribe() {
+            print("subscribe !!!!!!")
+            cancellables.removeAll()
+            GSocket.shared.$json
+                .sink { [weak self] json in
+                    if let json = json {
+                        print(json)
+                        if json["type"] == "disconnect" {
+                            print("disconnect !!!!!")
+                            
+                            self.router.present(.anotherDeviceLoginView, option: .fullscreenCover)
+                        }
+                    }
+                }.store(in: &cancellables)
         }
     }
 }

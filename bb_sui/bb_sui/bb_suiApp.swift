@@ -1,9 +1,12 @@
 import SwiftUI
+import Voyager
+import SwiftyJSON
 
 @main
 struct bb_suiApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
+    @State private var showAlert = false
     
     init() {
         print("start app")

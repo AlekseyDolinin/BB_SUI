@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 import SwiftyJSON
 import Voyager
 
@@ -59,13 +60,9 @@ struct NavigationBarForTabbar: View {
                 })
             }
         }
-        .onChange(of: viewModel.anotherDeviceLogin) {
-            router.present(.anotherDeviceLoginView, option: .fullscreenCover) { }
-        }
         .task {
             viewModel.getAvatar()
             viewModel.getOnboarding()
-//            viewModel.addDelegate()
         }
     }
 }
@@ -75,9 +72,8 @@ extension NavigationBarForTabbar {
     
     @Observable
     class ViewModel {
-        
+                
         var avatar = UIImage(named: "logo_frame")!
-        var anotherDeviceLogin = false
         
         func getAvatar() {
             Task(priority: .userInitiated) {
@@ -88,26 +84,47 @@ extension NavigationBarForTabbar {
         func getOnboarding() {
             print("!!!!!! getOnboarding   !!!!!!!")
         }
+    }
+}
 
-//        func addDelegate() {
-//            GSocket.shared.delegateWSState = self
-//        }
-        
-//        func gwsOpen(_ isOpen: Bool) { }
-        
-//        func gwsReciveMessage(json: JSON) {
-//            switch json["type"] {
-//            case "disconnect":
-//                disconnect(json)
-//            default:
-//                break
-//            }
-//        }
-        
-//        private func disconnect(_ json: JSON) {
-//            if json["data"]["reason"] == "another_device_login" {
-//                anotherDeviceLogin.toggle()
-//            }
-//        }
+
+
+
+
+
+
+
+class ObserverScoket {
+    
+    @EnvironmentObject var router: Router<AppRoute>
+    static let shared = ObserverScoket()
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
+    func subscribeGS() {
+        print(">>>>>>>> subscribeGS")
+        cancellables.removeAll()
+        GSocket.shared.$json
+            .sink { [weak self] json in
+                if let json = json {
+                    self?.gwsReciveMessage(json)
+                }
+            }.store(in: &cancellables)
+    }
+    
+    func gwsReciveMessage(_ json: JSON) {
+        switch json["type"] {
+        case "disconnect":
+            disconnect(json)
+        default:
+            break
+        }
+    }
+    
+    private func disconnect(_ json: JSON) {
+        if json["data"]["reason"] == "another_device_login" {
+            print("!!!! another_device_login !!!!!!")
+//            ContentView.shared.router.present(.anotherDeviceLoginView, option: .fullscreenCover)
+        }
     }
 }

@@ -3,7 +3,7 @@ import SwiftUI
 import Voyager
 
 final class GSocket: NSObject, ObservableObject {
-                        
+    
     static let shared = GSocket()
     var ws: WebSocket!
     
@@ -57,6 +57,7 @@ extension GSocket: WebSocketDelegate {
     func webSocketMessageText(_ text: String) {
         do {
             self.json = try JSON(data: text.data(using: .utf8)!)
+            NotificationCenter.default.post(name: .gsMessage, object: json)
         } catch let error {
             print("error GS: \(error)")
         }

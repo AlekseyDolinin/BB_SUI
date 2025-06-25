@@ -1,7 +1,7 @@
 import SwiftUI
 import Voyager
 
-struct ContainerUserInfo: View {
+struct UserInfoContainer: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     

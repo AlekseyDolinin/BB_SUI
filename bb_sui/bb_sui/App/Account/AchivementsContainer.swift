@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct ContainerAchivements: View {
+struct AchivementsContainer: View {
         
     var body: some View {
         ZStack {
-            AppTheme.Surface_BB_00db
+            AppTheme.BB_BGPrimary
                 .ignoresSafeArea()
             VStack(alignment: .leading, spacing: 8) {
                 Text("Достижения")

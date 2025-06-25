@@ -12,11 +12,52 @@ struct AccountView: View, Copyable {
             VStack {
                 NavigationBarOnlyBack()
                 ScrollView {
-                    VStack {
-                        ContainerTopAccount()
-                        ContainerIMentor()
-                        ContainerAchivements()
+                    VStack(alignment: .leading, spacing: 8) {
+                        TopAccountContainer()
+                        CustomFieldsContainer()
+                        VStack(spacing: 16) {
+                            VStack(alignment: .leading) {
+                                Text("Общие группы:")
+                                    .font(.ptRoot(size: .size_16, style: .medium))
+                                    .foregroundStyle(AppTheme.BB_TextSecondary)
+                                Text("list groups")
+                                    .font(.ptRoot(size: .size_16, style: .medium))
+                                    .foregroundStyle(AppTheme.BB_TextDisabled)
+                            }
+                            VStack(alignment: .leading) {
+                                Text("Подразделения:")
+                                    .font(.ptRoot(size: .size_16, style: .medium))
+                                    .foregroundStyle(AppTheme.BB_TextSecondary)
+                                Text("list subdivisions")
+                                    .font(.ptRoot(size: .size_16, style: .medium))
+                                    .foregroundStyle(AppTheme.BB_TextDisabled)
+                            }
+                        }
+                        .padding(.horizontal, 8)
+                        .padding(.top, 16)
+                        CharacteristicsContainer()
+                            .padding(.top, 16)
+                        VStack(spacing: 8) {
+                            Button(action: {
+                                print("Все характеристики")
+                            }) {
+                                Text("Активность")
+                                    .foregroundStyle(AppTheme.BB_TextHigh)
+                                    .font(.ptRoot(size: .size_16, style: .regular))
+                            }
+                            .buttonStyle(ButtonThird())
+                            Button(action: {
+                                print("Архив")
+                            }) {
+                                Text("Архив")
+                                    .foregroundStyle(AppTheme.BB_TextHigh)
+                                    .font(.ptRoot(size: .size_16, style: .regular))
+                            }
+                            .buttonStyle(ButtonSecond())
+                        }
+                        .padding(.top, 24)
                     }
+                    .padding(.bottom, 120)
                 }
                 .scrollIndicators(.hidden)
                 Spacer()

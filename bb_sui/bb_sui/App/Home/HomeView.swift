@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftyJSON
 import Voyager
 
 struct HomeView: View {
@@ -46,7 +47,6 @@ struct HomeView: View {
                             if !viewModel.storiesPinned.isEmpty || !viewModel.storiesBasic.isEmpty {
                                 ScrollView(.horizontal) {
                                     LazyHStack(alignment: .center, spacing: 8) {
-                                        
                                         // MARK: - pinned story
                                         LazyHStack(alignment: .center, spacing: 12) {
                                             ForEach(viewModel.storiesPinned) { story in
@@ -54,16 +54,12 @@ struct HomeView: View {
                                                     .onTapGesture {
                                                         LocalStorage.shared.selectStory = story
                                                         router.present(.story, option: .fullscreenCover)
-//                                                        router.present(.story, option: .popover) {
-//                                                            LocalStorage.shared.selectStory.currentSection = 0
-//                                                        }
                                                     }
                                             }
                                         }
                                         .padding(10)
                                         .background(AppTheme.BB_BGSecondary)
                                         .cornerRadius(16)
-                                        
                                         // MARK: - basic story
                                         LazyHStack(alignment: .center, spacing: 10) {
                                             ForEach(viewModel.storiesBasic, id: \.id) { story in
@@ -176,7 +172,6 @@ struct HomeView: View {
                             trailing: 8
                         )
                     )
-                    
                 }
                 .listStyle(.plain)
                 .scrollIndicators(.hidden)

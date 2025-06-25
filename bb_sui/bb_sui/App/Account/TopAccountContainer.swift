@@ -1,7 +1,7 @@
 import SwiftUI
 import Voyager
 
-struct ContainerTopAccount: View {
+struct TopAccountContainer: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     
@@ -41,7 +41,17 @@ struct ContainerTopAccount: View {
                             .lineLimit(0)
                             .foregroundStyle(AppTheme.BB_TextHigh)
                     }
-                    ContainerUserInfo()
+                    UserInfoContainer()
+                    FlowHStack {
+                        ForEach(getTags(), id: \.self) { text in
+                            MarkBasic(
+                                text: text
+                            )
+                        }
+                    }
+                    IMentorContainer()
+                    AchivementsContainer()
+                    LevelContainer()
                 }
             }
             .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
@@ -51,6 +61,10 @@ struct ContainerTopAccount: View {
         .onAppear() {
             print(LocalStorage.shared.userDataJSON)
         }
+    }
+    
+    private func getTags() -> [String] {
+        return ["Lorem", "ipsum", "dolor"]
     }
 }
 

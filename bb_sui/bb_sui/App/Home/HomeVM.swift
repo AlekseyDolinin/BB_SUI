@@ -12,7 +12,6 @@ extension HomeView {
         var marathons = [Marathon]()
         var storiesPinned = [Story]()
         var storiesBasic = [Story]()
-//        var eventsToday = [EventInCalendar]()
         var myLearning = [MyLearning]()
 //
         enum TypeCellMyLearning {
@@ -33,7 +32,6 @@ extension HomeView {
                 await getWidgets()
                 await getMarathons()
                 await getStories()
-//                await getEventsToday()
                 await getMyLearning()
             }
         }

@@ -43,6 +43,7 @@ struct InputCodeTenantView: View {
                         if viewModel.isLoading {
                             ProgressView()
                                 .progressViewStyle(.circular)
+                                .tint(AppTheme.BB_BGPrimary)
                         } else {
                             Text(LocalStrings.shared.titleSendButton[viewModel.indexSegment])
                         }

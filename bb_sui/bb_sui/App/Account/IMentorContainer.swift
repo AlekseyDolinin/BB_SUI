@@ -1,20 +1,20 @@
 import SwiftUI
 import Voyager
 
-struct ContainerIMentor: View {
+struct IMentorContainer: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     
     var body: some View {
         ZStack {
-            AppTheme.Surface_BB_00db
+            AppTheme.BB_BGPrimary
                 .ignoresSafeArea()
             VStack(alignment: .center, spacing: 8) {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Я - наставник")
                             .font(.ptRoot(size: .size_16, style: .medium))
-                            .foregroundStyle(AppTheme.BB_TextHigh)
+                            .foregroundStyle(AppTheme.BB_TextSecondary)
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("5")
@@ -49,6 +49,7 @@ struct ContainerIMentor: View {
                     HStack(spacing: 8) {
                         Text("Выбрать нового подопечного")
                             .foregroundStyle(AppTheme.BB_TextHigh)
+                            .font(.ptRoot(size: .size_16, style: .regular))
                         Spacer()
                         Image(systemName: "arrow.right")
                             .resizable()

@@ -12,20 +12,16 @@ struct AnotherDeviceLoginView: View {
             VStack {
                 Image("diconnect_img")
                     .resizable()
-                    .frame(width: 200, height: 200, alignment: .center)
+                    .frame(width: 200, height: 200)
                     .padding(.top, 80)
                 Text("Заходишь с другого устройства?")
-                    .font(.ptRoot_Bold(size: .size_20))
+                    .font(.ptRoot(size: .size_20, style: .bold))
                     .foregroundStyle(AppTheme.BB_TextHigh)
                     .padding(.top, 40)
                 Text("Сессия на этом устройстве прервана")
-                    .font(.ptRoot_Regular(size: .size_16))
+                    .font(.ptRoot(size: .size_16, style: .regular))
                     .foregroundStyle(AppTheme.BB_TextHigh)
                     .padding(.top, 16)
-                Spacer()
-            }
-
-            VStack {
                 Spacer()
                 Button(action: {
                     GSocket.shared.connect()
@@ -33,10 +29,10 @@ struct AnotherDeviceLoginView: View {
                 }) {
                     Text("Продолжить сеанс")
                 }
-                .padding()
-                .padding(.bottom, 40)
                 .buttonStyle(ButtonFirst())
             }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 40)
         }
     }
 }
