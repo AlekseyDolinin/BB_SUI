@@ -6,7 +6,12 @@ enum AppRoute: Route {
     case splash
     case inputCodeTenant
     case game
+    //
     case account
+    case allCharacteristic
+    case activities
+    case archive
+    //
     case globalSearch
     case menu
     case adminPanel
@@ -73,6 +78,12 @@ struct ContentView: View {
                 SelectGameView()
             case .story:
                 StoryView()
+            case .allCharacteristic:
+                AllCharacteristicView()
+            case .activities:
+                ActivitiesView()
+            case .archive:
+                ArchiveView()
             }
         }
         .onAppear {

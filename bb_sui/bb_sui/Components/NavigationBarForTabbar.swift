@@ -16,7 +16,7 @@ struct NavigationBarForTabbar: View {
             HStack {
                 HStack {
                     Button(action: {
-                        router.present(.account, option: .navigation)
+                        router.present(.account)
                     }) {
                         Image(uiImage: $viewModel.avatar.wrappedValue)
                             .resizable()
@@ -36,21 +36,21 @@ struct NavigationBarForTabbar: View {
                     }
                     .frame(width: 48, height: 48)
                     Button(action: {
-                        router.present(.adminPanel, option: .navigation)
+                        router.present(.adminPanel)
                     }) {
                         Image("adminIcon")
                             .tint(.white)
                     }
                     .frame(width: 48, height: 48)
                     Button(action: {
-                        router.present(.globalSearch, option: .navigation)
+                        router.present(.globalSearch)
                     }) {
                         Image(systemName: "magnifyingglass").font(.system(size: 24))
                             .tint(.white)
                     }
                     .frame(width: 48, height: 48)
                     Button(action: {
-                        router.present(.menu, option: .navigation)
+                        router.present(.menu)
                     }) {
                         Image("menuIcon")
                             .frame(width: 24, height: 24)

@@ -82,17 +82,17 @@ extension HomeView {
     private func openMyLearning(_ myLearning: MyLearning) {
         switch myLearning.type {
         case .quest:
-            router.present(.quest(id: myLearning.objectID), option: .navigation) { }
+            router.present(.quest(id: myLearning.objectID)) { }
         case .course:
-            router.present(.course(id: myLearning.courseLearningID), option: .navigation) { }
+            router.present(.course(id: myLearning.courseLearningID)) { }
         case .event:
-            router.present(.event(id: myLearning.objectID), option: .navigation) { }
+            router.present(.event(id: myLearning.objectID)) { }
         case .eventChain:
-            router.present(.eventChain(id: myLearning.objectID), option: .navigation) { }
+            router.present(.eventChain(id: myLearning.objectID)) { }
         case .tower:
-            router.present(.tower(id: myLearning.objectID), option: .navigation) { }
+            router.present(.tower(id: myLearning.objectID)) { }
         case .testing:
-            router.present(.testing(id: myLearning.objectID), option: .navigation) { }
+            router.present(.testing(id: myLearning.objectID)) { }
         default:
             break
         }

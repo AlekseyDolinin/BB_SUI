@@ -36,10 +36,14 @@ struct AccountView: View, Copyable {
                         .padding(.horizontal, 8)
                         .padding(.top, 16)
                         CharacteristicsContainer()
+                            .onTapGesture {
+                                router.present(.allCharacteristic)
+                            }
                             .padding(.top, 16)
                         VStack(spacing: 8) {
                             Button(action: {
-                                print("Все характеристики")
+                                print("Активность")
+                                router.present(.activities)
                             }) {
                                 Text("Активность")
                                     .foregroundStyle(AppTheme.BB_TextHigh)
@@ -47,7 +51,7 @@ struct AccountView: View, Copyable {
                             }
                             .buttonStyle(ButtonThird())
                             Button(action: {
-                                print("Архив")
+                                router.present(.archive)
                             }) {
                                 Text("Архив")
                                     .foregroundStyle(AppTheme.BB_TextHigh)

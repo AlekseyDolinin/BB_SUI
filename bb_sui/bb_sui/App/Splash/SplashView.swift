@@ -29,7 +29,7 @@ struct SplashView: View {
         }
         .onChange(of: viewModel.presentInputCodeTenant) {
             print("presentInputCodeTenant")
-            router.present(.inputCodeTenant, option: .navigation)
+            router.present(.inputCodeTenant)
         }
         .onChange(of: viewModel.goToGame) {
             router.updateRoot(.game)

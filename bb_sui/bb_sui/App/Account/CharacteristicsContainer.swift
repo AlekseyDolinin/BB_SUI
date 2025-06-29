@@ -1,10 +1,7 @@
 import SwiftUI
-import Voyager
 
 struct CharacteristicsContainer: View {
-    
-    @EnvironmentObject var router: Router<AppRoute>
-    
+        
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 8) {
@@ -14,14 +11,13 @@ struct CharacteristicsContainer: View {
                 ForEach(["1", "2", "3"], id: \.self) { chr in
                     ChrContainer(name: "1111111", value: 50)
                 }
-                Button(action: {
-                    print("Все характеристики")
-                }) {
-                    Text("Все характеристики")
-                        .foregroundStyle(AppTheme.BB_TextHigh)
-                        .font(.ptRoot(size: .size_16, style: .regular))
-                }
-                .buttonStyle(ButtonSecond())
+                Text("Все характеристики")
+                    .foregroundStyle(AppTheme.BB_TextHigh)
+                    .font(.ptRoot(size: .size_16, style: .regular))
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 48)
+                    .background(AppTheme.BB_BGSecondary.opacity(0.5))
+                    .cornerRadius(8)
             }
         }
     }
