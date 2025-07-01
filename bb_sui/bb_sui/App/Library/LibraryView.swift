@@ -5,7 +5,20 @@ struct LibraryView: View {
     
     @EnvironmentObject var router: Router<AppRoute>
     @State private var viewModel = ViewModel()
-        
+    @State private var selectIndex = 0
+    
+    private var tabs = [
+        "Курсы",
+        "Видео",
+        "Файлы",
+        "Ссылки",
+        "Статьи",
+        "Тестирование",
+        "Квесты",
+        "Треки",
+        "Опросы"
+    ]
+    
     var body: some View {
         ZStack {
             AppTheme.BB_BGPrimary
@@ -30,9 +43,10 @@ struct LibraryView: View {
                                 .padding(.bottom, 16)
                             })
                             // tabs
-                            Rectangle()
-                                .frame(height: 48)
-                                .foregroundStyle(.green)
+                            Tabs_h(tabs: tabs, selectIndex: $selectIndex)
+//                            Rectangle()
+//                                .frame(height: 48)
+//                                .foregroundStyle(.green)
                         })
                         .padding(.horizontal, 8)
                         .listRowBackground(Color.clear)

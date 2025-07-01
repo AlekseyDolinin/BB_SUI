@@ -133,7 +133,6 @@ extension SplashView {
         }
         
         func gwsOpen(_ isOpen: Bool) {
-            ObserverScoket.shared.subscribeGS()
             goToGame = isOpen
             // проверка есть ли запущенные активности (идущие бои)
             GSocket.shared.send(parameters: ["type": "update_player_state"])

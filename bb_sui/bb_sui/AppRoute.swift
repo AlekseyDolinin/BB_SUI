@@ -6,6 +6,7 @@ enum AppRoute: Route {
     case splash
     case inputCodeTenant
     case game
+    case library
     //
     case account
     case allCharacteristic
@@ -35,7 +36,6 @@ enum AppRoute: Route {
 struct ContentView: View {
         
     @StateObject var router = Router<AppRoute>(root: .splash)
-    @State private var viewModel = ViewModel()
     
     var body: some View {
         NavVoyagerView(router: router) { (route: AppRoute) in
@@ -46,6 +46,8 @@ struct ContentView: View {
                 InputCodeTenantView()
             case .game:
                 GameView()
+            case .library:
+                LibraryView()
             case .account:
                 AccountView()
             case .globalSearch:
@@ -85,35 +87,6 @@ struct ContentView: View {
             case .archive:
                 ArchiveView()
             }
-        }
-        .onAppear {
-            viewModel.subscribe()
-        }
-    }
-}
-
-
-extension ContentView {
-    
-    @Observable
-    class ViewModel {
-        
-        private var cancellables: Set<AnyCancellable> = []
-        
-        func subscribe() {
-            print("subscribe !!!!!!")
-            cancellables.removeAll()
-            GSocket.shared.$json
-                .sink { [weak self] json in
-                    if let json = json {
-                        print(json)
-                        if json["type"] == "disconnect" {
-                            print("disconnect !!!!!")
-                            
-                            self.router.present(.anotherDeviceLoginView, option: .fullscreenCover)
-                        }
-                    }
-                }.store(in: &cancellables)
         }
     }
 }

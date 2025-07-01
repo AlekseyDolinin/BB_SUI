@@ -2,7 +2,6 @@ import SwiftUI
 
 
 public extension ScrollView {
-
     // NB: CaptureScrollingOffset.EnvironmentKey is a class, so the value can be "shared" between Views,
     //     allowing both GeometryReader and Environment to participate in the same view.
     func trackScrolling() -> some View {
@@ -19,7 +18,6 @@ public extension ScrollView {
             )
             .environment(\.captureScrollingOffset, environmentKey)
     }
-    
 }
 
 
@@ -60,12 +58,16 @@ fileprivate struct CaptureOffsetViewModifier: ViewModifier {
         return captureScrollingOffset == nil ? ViewBuilder.buildEither(first: content) :
             ViewBuilder.buildEither(second: content.background(
                 GeometryReader { geometry in
-                    return Color.clear.preference(key: CaptureScrollingOffset.PreferenceKey.self,
-                                                  value: CaptureScrollingOffset.KeyData(bounds: captureScrollingOffset!.bounds, content: geometry.frame(in: .named(captureScrollingOffset!.coordinateSpace))))
+                    return Color.clear.preference(
+                        key: CaptureScrollingOffset.PreferenceKey.self,
+                        value: CaptureScrollingOffset.KeyData(
+                            bounds: captureScrollingOffset!.bounds,
+                            content: geometry.frame(in: .named(captureScrollingOffset!.coordinateSpace))
+                        )
+                    )
                 }
             ))
     }
-    
 }
 
 
@@ -81,7 +83,6 @@ fileprivate struct CaptureScrollingOffset {
             self.coordinateSpace = coordinateSpace
             self.bounds = bounds
         }
-
     }
 
     struct KeyData: Equatable {
@@ -91,18 +92,17 @@ fileprivate struct CaptureScrollingOffset {
         let bounds: CGRect
         let content: CGRect
 
-        static func == (lhs: CaptureScrollingOffset.KeyData, rhs: CaptureScrollingOffset.KeyData) -> Bool {
+        static func == (
+            lhs: CaptureScrollingOffset.KeyData,
+            rhs: CaptureScrollingOffset.KeyData) -> Bool {
             return lhs.bounds == rhs.bounds && lhs.content == rhs.content
         }
     }
 
     struct PreferenceKey: SwiftUI.PreferenceKey {
         static var defaultValue: CaptureScrollingOffset.KeyData = .default
-
-        static func reduce(value: inout CaptureScrollingOffset.KeyData, nextValue: () -> CaptureScrollingOffset.KeyData) {
-        }
+        static func reduce(value: inout CaptureScrollingOffset.KeyData, nextValue: () -> CaptureScrollingOffset.KeyData) {}
     }
-    
 }
 
 
@@ -112,5 +112,4 @@ fileprivate extension EnvironmentValues {
         get { self[CaptureScrollingOffset.EnvironmentKey.self] }
         set { self[CaptureScrollingOffset.EnvironmentKey.self] = newValue }
     }
-
 }

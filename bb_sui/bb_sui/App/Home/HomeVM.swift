@@ -13,7 +13,7 @@ extension HomeView {
         var storiesPinned = [Story]()
         var storiesBasic = [Story]()
         var myLearning = [MyLearning]()
-//
+
         enum TypeCellMyLearning {
             case plate
             case line

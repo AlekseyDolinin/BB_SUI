@@ -3,7 +3,9 @@ import Voyager
 
 struct GameView: View {
        
+    @EnvironmentObject var router: Router<AppRoute>
     @State private var tabSelection = 1
+    @State private var viewModel = ViewModel()
     
     var body: some View {
         TabView(selection: $tabSelection) {
@@ -42,10 +44,15 @@ struct GameView: View {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
+        .onAppear {
+            viewModel.subscribe()
+        }
+        .onChange(of: viewModel.presentAnotherDeviceLoginView) {
+            router.present(.anotherDeviceLoginView, option: .fullscreenCover)
+        }
     }
 }
 
 #Preview {
     GameView()
 }
-

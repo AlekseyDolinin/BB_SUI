@@ -29,7 +29,6 @@ final class AppLanguage {
         let response = await API.shared._request(link)
         if let json = response?.json {
             dict = json
-//            print(json)
         }
     }
         
