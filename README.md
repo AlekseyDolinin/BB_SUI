@@ -1,3 +1,4 @@
-# Вовлекай (BoxBattle)
+<img src="/w_2_l.svg">
 
-### Неторопясь переписываю BB на SwiftUI
+# Вовлекай (BoxBattle)
+#### Неторопясь переписываю BB на SwiftUI
