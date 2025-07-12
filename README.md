@@ -1,4 +1,4 @@
-<img src="/w_2_l.svg">
+<img src="bb-logo_new.svg">
 
 # Вовлекай (BoxBattle)
 #### Неторопясь переписываю BB на SwiftUI
