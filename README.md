@@ -1,4 +1,7 @@
-<img src="bb-logo_new.svg">
+<img src="bb-logo_new.svg" width=400>
 
-# Вовлекай (BoxBattle)
-#### Неторопясь переписываю BB на SwiftUI
+
+## Неторопясь переписываю BB на SwiftUI
+Для навигации пробую <a href="https://github.com/bryan-vh/Voyager">Voyager</a>
+
+
